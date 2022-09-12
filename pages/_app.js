@@ -16,7 +16,7 @@ const theme = createTheme({
             primaryLightHover: '$green300',
             primaryLightActive: '$green400',
             primaryLightContrast: '$green600',
-            primary: '#00916E',
+            primary: '#8DCEBE',
             primaryBorder: '$green500',
             primaryBorderHover: '$green600',
             primarySolidHover: '$green700',
@@ -35,9 +35,7 @@ export default function App({Component,pageProps: { session, ...pageProps },}) {
     return (
         <NextUIProvider  theme={theme}>
             <SessionProvider session={session}>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <Component {...pageProps} />
             </SessionProvider>
         </NextUIProvider>
     )

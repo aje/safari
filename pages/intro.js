@@ -1,0 +1,77 @@
+import React, {useState, useEffect} from 'react';
+import SplashScreenCard from "../components/SplashScreenCard";
+import {Button, Link} from "@nextui-org/react";
+import clsx from "clsx";
+import {useRouter} from "next/router";
+import image from "../public/background.jpg";
+import Image from "next/image";
+
+const slides = [
+    {
+        image: "https://nextui.org/images/card-example-4.jpeg",
+        title: "Attract customers",
+        subtitle:"Gain People's attention to your old trips and gain their trust",
+        color: "text-purple-500"
+    },
+    {
+        image: "https://nextui.org/images/card-example-3.jpeg",
+        title: "Attract 2",
+        subtitle:"Gain People's attention to your old trips and gain their trust",
+        color: "text-cyan-500"
+    },
+    {
+        image: "https://nextui.org/images/card-example-1.jpeg",
+        title: "Attract 3",
+        subtitle:"Gain People's attention to your old trips and gain their trust",
+        color: "text-orange-500"
+    },
+    {
+        image: "https://nextui.org/images/card-example-2.jpeg",
+        title: "Attract 4",
+        subtitle:"Gain People's attention to your old trips and gain their trust",
+        color: "text-yellow-500"
+    },
+]
+
+const Intro = () => {
+    const [step , setStep] = useState(0);
+    const router = useRouter()
+
+    const [height, setHeight] = useState(0);
+    useEffect(() => {
+        setHeight(window.innerHeight);
+    });
+    const onChangeStep = () => {
+        if(step < slides.length -1) {
+            setStep( step+1)
+        } else {
+            router.push('/signin')
+        }
+    }
+    return (<>
+            <div className={"fixed overflow-hidden  w-screen h-screen"}>
+                <Image
+                    alt="Mountains"
+                    src="/background.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                    quality={100}
+                />
+            </div>
+            <div className={"flex flex-col z-10 "} style={{height}}>
+
+            {slides.map((item, i) => i === step &&
+                <SplashScreenCard slides={slides} changeStep={onChangeStep} {...item} />)}
+            <div className="flex items-center w-full justify-between p-3">
+                <Button as={Link} href={"/"} rounded light auto>Skip</Button>
+                <div className="flex items-center">
+                    {slides.map((item, i) => <Button auto onPress={()=>setStep(i)} key={i} className={clsx("w-2 h-2 bg-primary/20 mx-2 rounded-full", step === i && "bg-primary/100" )}/>)}
+                </div>
+                <Button color={"primary"} auto rounded onPress={onChangeStep}>{step === slides.length -1 ? "SignIn" :  "Next"}</Button>
+            </div>
+        </div>
+        </>
+    );
+};
+
+export default Intro;
