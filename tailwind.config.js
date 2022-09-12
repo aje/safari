@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
     content: [
@@ -13,7 +13,10 @@ module.exports = {
             fontFamily: {
                 'sans': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
             },
+            borderRadius: {
+                DEFAULT: "20px"
+            }
         }
     },
     plugins: [],
-}
+};

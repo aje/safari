@@ -35,7 +35,7 @@ export default function App({Component,pageProps: { session, ...pageProps },}) {
     return (
         <NextUIProvider  theme={theme}>
             <SessionProvider session={session}>
-                <Component {...pageProps} />
+                <Layout><Component {...pageProps} /></Layout>
             </SessionProvider>
         </NextUIProvider>
     )
