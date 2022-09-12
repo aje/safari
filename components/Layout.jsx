@@ -1,9 +1,9 @@
 import Nav from './Nav'
 import Footer from './Footer'
 
-const Layout = ({children}) => {
+const Layout = ({children, noNav}) => {
     return (<>
-        <Nav />
+            <Nav />
             <main>{children}</main>
         {/*<Footer />*/}
         </>

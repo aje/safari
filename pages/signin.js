@@ -31,7 +31,7 @@ export default function SignIn({ providers }) {
 
                 <Text h6 className={"mb-5 text-center text-gray-700 font-normal"}>Or continue with social</Text>
             {Object.values(providers).map((provider) => (
-                <Button className={"mb-4"} size={"lg"} icon={<Github size={30} />} bordered onClick={() => signIn(provider.id)}>
+                <Button className={"mb-4"} key={provider.name} size={"lg"} icon={<Github size={30} />} bordered onClick={() => signIn(provider.id)}>
                     Sign in with {provider.name}
                 </Button>
             ))}

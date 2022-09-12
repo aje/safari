@@ -30,7 +30,8 @@ const theme = createTheme({
         space: {},
         fonts
     }
-})
+});
+
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     return (
         <NextUIProvider  theme={theme}>
