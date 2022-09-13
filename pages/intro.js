@@ -8,34 +8,40 @@ import Image from "next/image";
 
 const slides = [
     {
-        image: "https://nextui.org/images/card-example-4.jpeg",
+        image: "/intro1.png",
         title: "Attract customers",
         subtitle:"Gain People's attention to your old trips and gain their trust",
-        color: "text-purple-500"
+        color: "text-pink-300"
     },
     {
-        image: "https://nextui.org/images/card-example-3.jpeg",
-        title: "Attract 2",
+        image: "/intro3.png",
+        title: "Get foreigners",
+        subtitle:"Gain People's attention to your old trips and gain their trust",
+        color: "text-yellow-500"
+    },
+    {
+        image: "/intro2.png",
+        title: "Get travellers",
         subtitle:"Gain People's attention to your old trips and gain their trust",
         color: "text-cyan-500"
     },
     {
-        image: "https://nextui.org/images/card-example-1.jpeg",
-        title: "Attract 3",
-        subtitle:"Gain People's attention to your old trips and gain their trust",
-        color: "text-orange-500"
-    },
-    {
-        image: "https://nextui.org/images/card-example-2.jpeg",
-        title: "Attract 4",
+        image: "/intro4.png",
+        title: "Share your trips",
         subtitle:"Gain People's attention to your old trips and gain their trust",
         color: "text-yellow-500"
     },
-]
+    {
+        image: "/intro5.png",
+        title: "Be perfect",
+        subtitle:"Gain People's attention to your old trips and gain their trust",
+        color: "text-purple-800"
+    },
+];
 
 const Intro = () => {
     const [step , setStep] = useState(0);
-    const router = useRouter()
+    const router = useRouter();
 
     const [height, setHeight] = useState(0);
     useEffect(() => {
@@ -47,7 +53,7 @@ const Intro = () => {
         } else {
             router.push('/signin')
         }
-    }
+    };
     return (<>
             <div className={"fixed overflow-hidden  w-screen h-screen"}>
                 <Image

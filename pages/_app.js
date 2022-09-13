@@ -18,14 +18,14 @@ const theme = createTheme({
             primaryLightActive: '$green400',
             primaryLightContrast: '$green600',
             primary: '#8DCEBE',
-            primaryBorder: '$green500',
+            primaryBorder: '#77b5a5',
             primaryBorderHover: '$green600',
             primarySolidHover: '$green700',
             primarySolidContrast: '$white',
             primaryShadow: '$green500',
 
             gradient: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
-            link: '#5E1DAD',
+            link: '#648386',
 
         },
         space: {},

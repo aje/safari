@@ -12,8 +12,8 @@ const Nav = () => {
         <div className="bg-gradient-to-t from-slate-100 h-8 w-full"/>
         <div className={"p-4 w-full bg-slate-100  "}>
             <div className={"bg-white rounded shadow-md flex justify-around w-full p-4"}>
-                <Link className={clsx(route === "/signin" ? "text-primary": "text-gray-400", 'relative')} href="/signin">
-                    {route === "/signin" && <>
+                <Link className={clsx(route === "/" ? "text-primary": "text-gray-400", 'relative')} href="/">
+                    {route === "/" && <>
                         <span className="triangle2 bg-slate-100"/>
                         <span className="triangle"/>
                     </>}
