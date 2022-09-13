@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 
 const fonts = {
     sans: "'Century Gothic',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
+    mono: "'Cinnabar';",
 };
 const theme = createTheme({
     type: "light", // it could be "light" or "dark"

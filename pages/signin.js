@@ -19,8 +19,8 @@ export default function SignIn({ providers }) {
                 />
             </div>
             <div className={"flex relative p-10 flex-col z-10 "} >
-                <Text h1  className={"absolute z-0  opacity-5 left-0 "}  style={{fontSize: 150, top: -40}}>Login</Text>
-                <Text h1 color={'primary'} className={"relative mb-8 text-6xl mt-10"} >Login</Text>
+                <Text h1 className={"absolute font-mono z-0  opacity-5 left-0 "}  style={{fontSize: 150, top: -40}}>Login</Text>
+                <Text h1 color={'primary'} className={"relative font-mono mb-8 text-7xl mt-10"} >Login</Text>
 
                     <Input size={"lg"} bordered className={"mb-3"} label={"Username"} />
                     <Input size={"lg"} bordered className={"mb-8"} label={"Password"} type={"password"} />

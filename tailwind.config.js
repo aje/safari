@@ -11,7 +11,7 @@ module.exports = {
                 primary: 'rgb(var(--color-primary) / <alpha-value>)',
             },
             fontFamily: {
-                'sans': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
+                'mono': ['Cinnabar', ...defaultTheme.fontFamily.sans],
             },
             borderRadius: {
                 DEFAULT: "20px"
