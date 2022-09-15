@@ -11,7 +11,7 @@ const Nav = () => {
     const {route} = useRouter();
     return (<div className={"fixed bottom-0 z-50  w-screen"}>
         <div className="bg-gradient-to-t from-slate-100 h-8 w-full"/>
-        <div className={"p-4 w-full bg-slate-100  "}>
+        <div className={"p-4 w-full bg-slate-100"}>
             <div className={"bg-white rounded shadow-md flex justify-around w-full p-4"}>
                 <NextLink href="/">
                 <Link className={clsx(route === "/" ? "text-primary": "text-gray-400", 'relative')} href="/">

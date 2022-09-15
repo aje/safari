@@ -1,25 +1,47 @@
 import {signIn, useSession, signOut} from "next-auth/react";
-import {Button,Dropdown, Badge, Avatar, Container, styled, Text, useTheme, Progress} from "@nextui-org/react";
+import {Button,Dropdown,Navbar, Badge, Avatar, Container, styled, Text, useTheme, Progress} from "@nextui-org/react";
 import {Verified} from "@styled-icons/material-rounded/Verified"
-
+import { Tab } from '@headlessui/react'
 import { Edit } from '@styled-icons/remix-line/Edit';
 import { Card } from '@nextui-org/react';
 import Rating from "../../components/Rating";
 import ReviewItem from "../../components/ReviewItem";
 import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
 import LoadingPage from "../../components/LoadingPage";
+import Travelers from "../../components/guide/Travelers";
+import Qualifications from "../../components/guide/Qualifications";
+import Reviews from "../../components/guide/Reviews";
+import Info from "../../components/guide/Info";
+import Level from "../../components/guide/Level";
+import Badges from "../../components/guide/Badges";
+import React, {useState} from "react";
 
 
-export default function Home() {
+export default function Profile() {
     const { data: session } = useSession();
+
+    const [selectedIndex, setSelectedIndex] = useState(0)
     if(!session) return <LoadingPage />;
     const {user}  = session;
+
+    const qualifications = [
+        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
+        {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "Traveling certificate"},
+        {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "Tourism Licence"},
+    ];
+
 
     const pictureUsers = [
         "https://i.pravatar.cc/150?u=a042581f4e29026024d",
         "https://i.pravatar.cc/150?u=a042581f4e29026704d",
         "https://i.pravatar.cc/150?u=a04258114e29026702d",
         "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    ];
+    const badges = [
+        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
+        {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "this badge"},
+        {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "this badge"},
+        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
     ];
 
     const reviews = [
@@ -42,19 +64,6 @@ export default function Home() {
             images: pictureUsers,
             timestamp: 1663143033901
         },
-    ];
-
-    const badges = [
-        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
-        {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "this badge"},
-        {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "this badge"},
-        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
-    ];
-
-    const qualifications = [
-        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
-        {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "Traveling certificate"},
-        {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "Tourism Licence"},
     ];
 
     const travelers = [
@@ -172,92 +181,44 @@ export default function Home() {
                 </div>
             </div>
 
-            <Card className={"my-3"} >
-                <div className="px-4 flex justify-between items-end">
-                    <div>
-                        <Text span weight="bold" color={"primary"} size={60}>75</Text>
-                        <Text span color={"gray"}>Lvl.</Text>
-                    </div>
-                    <span className={"mb-4"}><Text size={20} span weight={"bold"}>250SP</Text><Text span size={14}>/1500</Text></span>
-                </div>
-                <div className={"px-4 pb-4 -mt-2"}> <Progress color="primary" value={75} /></div>
-            </Card>
+            <Tab.Group  selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+                <Navbar
+                    as={Card}
+                    className={"mt-5"}
+                    // containerCss={{backgroundColor: "transparent !important"}}
+                    isCompact variant="sticky">
+                    <Tab.List className={"text-sm"} as={Navbar.Content} activeColor={"primary"} variant="highlight">
+                        <Tab as={Navbar.Link} isActive={selectedIndex === 0}>Achievements</Tab>
+                        <Tab  as={Navbar.Link} isActive={selectedIndex === 1}>Info</Tab>
+                    </Tab.List>
+                </Navbar>
+                <Tab.Panels>
+                    <Tab.Panel>
+                        <Level currentXP={260} endLvlXP={1000} lvl={5}/>
 
-            <Card className={"my-3"}>
-                <Card.Body>
-                    <Text h6>Bio</Text>
-                    <Text size={14}>Jambo My Name is Antony I offer guiding services with a 4×4 jeep from wildlife tours, photography, documentaries, and cultural tours.I am ready to share my experience and skills gained to make a beautiful holiday with awesome memories for an African dream once the dream coming live.
-                    </Text>
-                    <Text h6 className={"mt-4"}>Language</Text>
-                    <Text  size={14}>English, French, Chinese</Text>
-                    <Text h6 className={"mt-4"}>Age</Text>
-                    <Text  size={14}>56 Years old</Text>
-                    <Text h6 className={"mt-4"}>Guiding experience</Text>
-                    <Text   size={14}>20 years experience</Text>
-                </Card.Body>
-            </Card>
+                        <Badges badges={badges}/>
 
-            <Card className={"my-3"}>
-                <Card.Header>
-                    <Text b>Badges ({badges.length})</Text>
-                </Card.Header>
+                        <Travelers data={travelers}/>
 
-                <div className={"pl-5 pt-0"}>
-                    {badges.map(({url}, index) => (
-                        <Avatar
-                            className={"mr-4 mb-2 inline-flex"}
-                            squared
-                            key={index}
-                            size="lg"
-                            src={url}
-                            stacked
-                        />
-                    ))}
-                </div>
-            </Card>
+                        <Reviews data={reviews}/>
+                    </Tab.Panel>
+                    <Tab.Panel>
+                        <Info  data={{
+                            bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto beatae consequatur deserunt dignissimos dolorem eaque eius eos est iusto officia quidem rem reprehenderit repudiandae sit unde, velit voluptates voluptatum!",
+                            languages: "English, Chinese",
+                            age: 33,
+                            experience: 10
+                        }}/>
+                        <Qualifications data={qualifications}/>
+                    </Tab.Panel>
+                </Tab.Panels>
+            </Tab.Group>
 
-            <Card className={"my-3"}>
-                <Card.Header>
-                    <Text b>Travelers ({travelers.length})</Text>
-                </Card.Header>
-                <div className={"pl-5 pb-3 pt-0"}>
-                    <Avatar.Group count={travelers.length - 6}>
-                        {travelers.map(({user}, index) => index < 6 && (
-                            <Avatar
-                                key={index}
-                                size="lg"
-                                pointer
-                                src={user.image}
 
-                                // color="gradient"
-                                stacked
-                            />
-                        ))}
-                    </Avatar.Group>
 
-                </div>
-            </Card>
 
-            <Card className={"my-3"}>
-                <Card.Header>
-                    <Text b>Qualifications ({qualifications.length})</Text>
-                </Card.Header>
-                <Card.Body>
-                    {qualifications.map((item, i) => <div key={i} className="flex mb-3 items-center justify-between">
-                        <Text>{item.name} </Text>
-                        <Avatar squared src={item.url}/>
-                    </div>)}
-                </Card.Body>
-            </Card>
 
-            <Card className={"my-3"}>
-                <Card.Header>
-                    <Text b>Reviews ({reviews.length})</Text>
-                </Card.Header>
-                <Card.Body>
-                    {reviews.map((item ,i) => <ReviewItem  key={i} item={item}/>)}
-                </Card.Body>
-            </Card>
+
         </div>
     )
 }
