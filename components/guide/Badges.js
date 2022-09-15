@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {Avatar, Card, Text} from "@nextui-org/react";
 
 const Badges = ({badges}) => {

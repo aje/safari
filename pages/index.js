@@ -1,22 +1,11 @@
-import Head from 'next/head'
-import {signIn, useSession, signOut} from "next-auth/react";
-import {useState} from "react"
+import {useSession} from "next-auth/react";
+import React, {useState} from "react"
 
-import {Button, Container, Link, styled, Text, useTheme} from "@nextui-org/react";
-
-import {Flag} from "@styled-icons/entypo/Flag";
-import {Caravan} from "@styled-icons/remix-line/Caravan";
+import {Button, Text, useTheme} from "@nextui-org/react";
 import PageTitle from "../components/PageTitle";
-import React from "react";
 import Image from "next/image";
 import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
 import {ArrowUpS} from "@styled-icons/remix-line/ArrowUpS";
-import {Car} from "@styled-icons/remix-line/Car";
-import Level from "../components/guide/Level";
-import Badges from "../components/guide/Badges";
-import Qualifications from "../components/guide/Qualifications";
-import Travelers from "../components/guide/Travelers";
-import Reviews from "../components/guide/Reviews";
 
 
 export default function Home() {

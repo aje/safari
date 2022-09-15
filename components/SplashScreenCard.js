@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Text} from "@nextui-org/react";
+import {Card, Text} from "@nextui-org/react";
 import clsx from "clsx";
 
 const SplashScreenCard = ({image, color, title, subtitle}) => {

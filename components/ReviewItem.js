@@ -1,4 +1,4 @@
-import {Avatar, Card, Text, User} from "@nextui-org/react";
+import {Avatar, Text, User} from "@nextui-org/react";
 import Moment from "react-moment";
 import Rating from "./Rating";
 

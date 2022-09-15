@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {Star} from "@styled-icons/material-rounded/Star"
 import {StarHalf} from "@styled-icons/material-rounded/StarHalf"
 import {StarBorderPurple500} from "@styled-icons/material-rounded/StarBorderPurple500"

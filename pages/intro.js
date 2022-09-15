@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import SplashScreenCard from "../components/SplashScreenCard";
 import {Button, Link} from "@nextui-org/react";
 import clsx from "clsx";
 import {useRouter} from "next/router";
-import image from "../public/background.jpg";
 import Image from "next/image";
 
 const slides = [

@@ -1,9 +1,9 @@
 import '../styles/globals.css'
-import { SessionProvider } from "next-auth/react"
+import {SessionProvider} from "next-auth/react"
 import {createTheme, NextUIProvider} from '@nextui-org/react';
 import Layout from "../components/Layout";
-import { useRouter } from 'next/router';
-import {useState, useEffect} from "react";
+import {useRouter} from 'next/router';
+import {useEffect, useState} from "react";
 import LoadingPage from "../components/LoadingPage";
 
 const fonts = {

@@ -1,11 +1,8 @@
-import {signIn, useSession, signOut} from "next-auth/react";
-import {Button,Dropdown,Navbar, Badge, Avatar, Container, styled, Text, useTheme, Progress} from "@nextui-org/react";
+import {signOut, useSession} from "next-auth/react";
+import {Avatar, Badge, Button, Card, Dropdown, Navbar, Text} from "@nextui-org/react";
 import {Verified} from "@styled-icons/material-rounded/Verified"
-import { Tab } from '@headlessui/react'
-import { Edit } from '@styled-icons/remix-line/Edit';
-import { Card } from '@nextui-org/react';
+import {Tab} from '@headlessui/react'
 import Rating from "../../components/Rating";
-import ReviewItem from "../../components/ReviewItem";
 import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
 import LoadingPage from "../../components/LoadingPage";
 import Travelers from "../../components/guide/Travelers";
@@ -15,6 +12,7 @@ import Info from "../../components/guide/Info";
 import Level from "../../components/guide/Level";
 import Badges from "../../components/guide/Badges";
 import React, {useState} from "react";
+import Achievements from "../../components/guide/Achievements";
 
 
 export default function Profile() {
@@ -132,6 +130,30 @@ export default function Profile() {
         },
     ];
 
+    const achievements = [
+        {
+            image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+            name: "First Trips",
+            action: "Trips added",
+            current: 1,
+            max: 3,
+        },
+        {
+            image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+            name: "First traveler",
+            action: "Traveler invited",
+            current: 2,
+            max: 3,
+        },
+        {
+            image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+            name: "First driver friend",
+            action: "Driver invited",
+            current: 3,
+            max: 3,
+        },
+    ];
+
     const onMoreMenu = (key) => {
         switch (key) {
             case "upload":
@@ -194,12 +216,10 @@ export default function Profile() {
                 </Navbar>
                 <Tab.Panels>
                     <Tab.Panel>
-                        <Level currentXP={260} endLvlXP={1000} lvl={5}/>
-
+                        <Level current={260} max={1000} lvl={5}/>
+                        <Achievements data={achievements}/>
                         <Badges badges={badges}/>
-
                         <Travelers data={travelers}/>
-
                         <Reviews data={reviews}/>
                     </Tab.Panel>
                     <Tab.Panel>

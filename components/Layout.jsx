@@ -1,5 +1,4 @@
 import Nav from './Nav'
-import Footer from './Footer'
 import {useSession} from "next-auth/react";
 import BackgroundGradient from "./BackgroundGradient";
 import React from "react";

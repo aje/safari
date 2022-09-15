@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {Card, Text} from "@nextui-org/react";
 import ReviewItem from "../ReviewItem";
 
@@ -7,9 +6,9 @@ const Reviews = ({data}) => {
         <Card.Header>
             <Text b>Reviews ({data.length})</Text>
         </Card.Header>
-        <Card.Body>
+        <div className={"px-3"}>
             {data.map((item ,i) => <ReviewItem  key={i} item={item}/>)}
-        </Card.Body>
+        </div>
     </Card>);
 };
 

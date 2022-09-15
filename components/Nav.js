@@ -1,9 +1,9 @@
-import { Navbar, Button,  Text, Link, Card, Radio } from "@nextui-org/react";
+import {Link} from "@nextui-org/react";
 import NextLink from 'next/link';
 import {Caravan} from "@styled-icons/remix-line/Caravan"
 import {ImageAdd} from "@styled-icons/remix-line/ImageAdd"
 import {User3} from "@styled-icons/remix-line/User3"
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import {clsx} from "clsx";
 
 
@@ -14,7 +14,7 @@ const Nav = () => {
         <div className={"p-4 w-full bg-slate-100"}>
             <div className={"bg-white rounded shadow-md flex justify-around w-full p-4"}>
                 <NextLink href="/">
-                <Link className={clsx(route === "/" ? "text-primary": "text-gray-400", 'relative')} href="/">
+                <Link className={clsx(route === "/" ? "text-primary": "text-gray-400", 'relative')}>
                     <>
                     {route === "/" && <>
                         <span className="triangle2 bg-slate-100"/>
@@ -26,7 +26,7 @@ const Nav = () => {
                 </NextLink>
                 <Link  className={"bg-primary -mt-2 -mb-2 shadow-lg shadow-primary/50 p-3 rounded-full text-white"} href="#"><ImageAdd  size={26}/></Link>
                 <NextLink href="/profile">
-                    <Link  className={clsx(route === "/profile" ? "text-primary": "text-gray-400", 'relative')} href="/profile">
+                    <Link  className={clsx(route === "/profile" ? "text-primary": "text-gray-400", 'relative')} >
                         <>
                             {route === "/profile" && <>
                             <span className="triangle2 bg-slate-100"/>
