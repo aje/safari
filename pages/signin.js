@@ -11,7 +11,7 @@ export default function SignIn({ providers }) {
         <>
 
             <PageTitle title={"Login"}/>
-            <div className={"flex relative flex-col z-10 p-10"} >
+            <div className={"flex relative flex-col z-10 p-8"} >
 
                 <Input size={"lg"} bordered className={"mb-3"} label={"Username"} />
                 <Input size={"lg"} bordered className={"mb-8"} label={"Password"} type={"password"} />

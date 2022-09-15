@@ -15,6 +15,7 @@
     "@styled-icons/entypo-social": "^10.46.0",
     "@styled-icons/material-rounded": "^10.46.0",
     "@styled-icons/remix-line": "^10.46.0",
+    "axios": "^0.27.2",
     "clsx": "^1.2.1",
     "mongodb": "^4.9.0",
     "mongoose": "^6.5.3",
