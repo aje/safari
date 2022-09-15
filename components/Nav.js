@@ -24,7 +24,7 @@ const Nav = () => {
                     </>
                 </Link>
                 </NextLink>
-                <Link  className={"bg-primary -mt-2 -mb-2 shadow-lg shadow-primary/50 p-3 rounded-full text-white"} href="#"><ImageAdd  size={26}/></Link>
+                <NextLink href="/upload"><Link className={clsx("bg-primary" ,"-mt-2 -mb-2 shadow-lg shadow-primary/50 p-3 rounded-full text-white")}><ImageAdd  size={26}/></Link></NextLink>
                 <NextLink href="/profile">
                     <Link  className={clsx(route === "/profile" ? "text-primary": "text-gray-400", 'relative')} >
                         <>

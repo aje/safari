@@ -6,6 +6,7 @@ import PageTitle from "../components/PageTitle";
 import Image from "next/image";
 import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
 import {ArrowUpS} from "@styled-icons/remix-line/ArrowUpS";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -25,8 +26,8 @@ export default function Home() {
             </div>
                  <div className="w-full justify-center my-3 flex">
                      {/*{session ? <>*/}
-                        <Button onPress={()=>setShowTip(false)} className={"mr-4"} icon={<ArrowUpS size={20}/>} rounded light auto>Dismiss</Button>
-                        <Button color={"primary"} auto rounded icon={<ImageAdd size={24}/>} >Upload a trip</Button>
+                     <Button onPress={()=>setShowTip(false)} className={"mr-4"} icon={<ArrowUpS size={20}/>} rounded light auto>Dismiss</Button>
+                     <Link href='/upload'><Button as={"a"} color={"primary"} auto rounded icon={<ImageAdd size={24}/>} >Upload a trip</Button></Link>
                      {/*</> :*/}
                      {/* <Button color={"primary"} auto rounded icon={<Car size={24}/>} >SING UP AS DRIVER</Button> }*/}
                 </div></>}
