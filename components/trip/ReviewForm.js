@@ -1,11 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "axios";
 import Rating2 from "../Rating2";
-import Rating from "react-rating";
-import {Star} from "@styled-icons/material-rounded/Star";
-import {StarBorderPurple500} from "@styled-icons/material-rounded/StarBorderPurple500";
 
 const ReviewForm = ({id}) => {
     const [loading, setLoading] = useState(false);

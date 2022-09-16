@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Card, User} from "@nextui-org/react";
+import React, {useState} from 'react';
+import {Card, Text, User} from "@nextui-org/react";
 import Moment from "react-moment";
 import Rating2 from "../Rating2";
-import {Text} from "@nextui-org/react";
 import Link from "next/link";
 
 const ListItem = ({item}) => {

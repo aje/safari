@@ -5,6 +5,7 @@ import Moment from "react-moment";
 import Rating2 from "../../../components/Rating2";
 import Reviews from "../../../components/guide/Reviews";
 import ReviewForm from "../../../components/trip/ReviewForm";
+import {ArrowBack} from "@styled-icons/material-rounded/ArrowBack";
 
 const  Trip = () => {
     const item ={
@@ -87,6 +88,7 @@ const  Trip = () => {
     const { id } = router.query;
     return (<div className={"pt-2 px-4 pb-28"}>
         <div className="flex items-center justify-between">
+            <Button  onClick={() => router.back()} className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0 -ml-2 mr-1'} light auto><ArrowBack size={26}/></Button>
             <div className="flex-grow">
                 <User
                     className={"pl-0"}
@@ -96,7 +98,7 @@ const  Trip = () => {
                     description={<Moment format={"LL"}>{item.timestamp}</Moment>}
                 />
             </div>
-            <Card className={"w-auto px-3 pb-1 rounded-full"}><Rating2 value={item.rating} count={item.reviews.length}/></Card>
+            <Card className={"w-auto px-3 pb-1 rounded-full"}><Rating2 sm readonly value={item.rating} count={item.reviews.length}/></Card>
         </div>
 
         <Card  variant="flat" className="my-3">

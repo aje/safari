@@ -16,7 +16,7 @@ const Contact = () => {
     };
 
     return (<>
-        <PageTitle title={"UPLOAD"}/>
+        <PageTitle withBackButton title={"UPLOAD"}/>
         <div className={"flex relative flex-col z-10 p-8"} >
             <Input required size={"lg"} bordered className={"mb-3"} label={"Title *"} placeholder={"Choose a good title"}/>
             <Textarea required  rows={4} size={"lg"} bordered className={"mb-3"} label={"Description *"} placeholder={"Describe the trip with enthusiasm"} />

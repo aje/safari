@@ -18,7 +18,7 @@ import Achievements from "../../components/guide/Achievements";
 export default function Profile() {
     const { data: session } = useSession();
 
-    const [selectedIndex, setSelectedIndex] = useState(0)
+    const [selectedIndex, setSelectedIndex] = useState(0);
     if(!session) return <LoadingPage />;
     const {user}  = session;
 
@@ -27,7 +27,6 @@ export default function Profile() {
         {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "Traveling certificate"},
         {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "Tourism Licence"},
     ];
-
 
     const badges = [
         {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
@@ -186,11 +185,11 @@ export default function Profile() {
             <Text h2 className={"mt-2 mb-0 text-gray-600"}>{user.name}</Text>
             <Text >{user.bio || user.email}</Text>
             <div className="flex items-center justify-between">
-                <Rating2 rating={3.4} count={44}/>
+                <Rating2 value={3.5} readonly count={44}/>
                 <div className={"flex"}>
                     {/*<Button size={'xs'} icon={<Edit size={16} color={"gray"}/>} light auto></Button>*/}
                     <Dropdown>
-                        <Dropdown.Trigger><Button size={'xs'} light auto><MoreVert size={20} color={"gray"}/></Button></Dropdown.Trigger>
+                        <Dropdown.Trigger><Button className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0'} light auto><MoreVert size={20}/></Button></Dropdown.Trigger>
                         <Dropdown.Menu  onAction={onMoreMenu} aria-label="Static Actions">
                             <Dropdown.Item key="upload">Upload qualifications</Dropdown.Item>
                             <Dropdown.Item key="edit">Edit profile</Dropdown.Item>
@@ -205,7 +204,7 @@ export default function Profile() {
             <Tab.Group  selectedIndex={selectedIndex} onChange={setSelectedIndex}>
                 <Navbar
                     as={Card}
-                    className={"mt-5"}
+                    className={"mt-2"}
                     // containerCss={{backgroundColor: "transparent !important"}}
                     isCompact variant="sticky">
                     <Tab.List className={"text-sm"} as={Navbar.Content} activeColor={"primary"} variant="highlight">
