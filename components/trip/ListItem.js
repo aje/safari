@@ -2,32 +2,41 @@ import React, {useEffect, useState} from 'react';
 import {Card, User} from "@nextui-org/react";
 import Moment from "react-moment";
 import Rating2 from "../Rating2";
+import {Text} from "@nextui-org/react";
+import Link from "next/link";
 
 const ListItem = ({item}) => {
     const [selectedImage, setSelectedImage] = useState(0);
 
-    return (<>
-        <Card  variant="flat" className="my-3">
+    return (
+        <Link href={`/trips/trip/${item.id}`}>
+        <Card className="mb-5" isPressable >
             <Card.Image
+                height={400}
+                showSkeleton
                 src={item.gallery[selectedImage]}
                 objectFit="cover"
             />
-        </Card>
-        <Card>
-            <div className="flex items-center justify-between">
+
+            <Card.Footer>
                 <div className="flex-grow">
                     <User
                         className={"pl-0"}
-                        size={"sm"}
                         src={item.user.image}
                         name={item.user.name}
                         description={<Moment format={"LL"}>{item.timestamp}</Moment>}
                     />
                 </div>
-                <Rating2 value={item.rating} count={item.reviews.length}/>
-            </div>
+                <Rating2 value={item.rating} sm readonly count={item.reviewsCount}/>
+
+            </Card.Footer>
+
+            <Card.Body className={"pt-0"}>
+                <Text size={14}>{item.title}</Text>
+            </Card.Body>
         </Card>
-        </>);
+        </Link>
+);
 };
 
 export default ListItem;

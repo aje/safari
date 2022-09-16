@@ -7,6 +7,7 @@ import Image from "next/image";
 import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
 import {ArrowUpS} from "@styled-icons/remix-line/ArrowUpS";
 import Link from "next/link";
+import ListItem from "../components/trip/ListItem";
 
 
 export default function Home() {
@@ -14,7 +15,48 @@ export default function Home() {
     const {theme} = useTheme();
     const [showTip, setShowTip] = useState(true);
 
-
+    const trips = [
+        {
+            id: 1,
+            rating: 5,
+            title: "This was the great trip, one of the best ones really",
+            description: "Lorem  ipsum docolor lorem    ",
+            user: {
+                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                name: "Ariana Wattson",
+            },
+            gallery: [
+                "https://api.lorem.space/image?w=500&h=500",
+                "https://api.lorem.space/image/house?w=500",
+                "https://api.lorem.space/image/car?w=500",
+                "https://api.lorem.space/image/drink?w=500",
+                "https://api.lorem.space/image/burger?w=500",
+                "https://api.lorem.space/image?w=500",
+            ],
+            timestamp: 1663143033901,
+            reviewsCount: 88
+        },
+        {
+            id: 2,
+            rating: 5,
+            title: "This was the great trip",
+            description: "Lorem  ipsum docolor lorem    ",
+            user: {
+                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                name: "Ariana Wattson",
+            },
+            gallery: [
+                "https://api.lorem.space/image?w=450&h=500",
+                "https://api.lorem.space/image/house?w=500",
+                "https://api.lorem.space/image/car?w=500",
+                "https://api.lorem.space/image/drink?w=500",
+                "https://api.lorem.space/image/burger?w=500",
+                "https://api.lorem.space/image?w=500",
+            ],
+            timestamp: 1663143033901,
+            reviewsCount: 150
+        },
+    ];
 
     return (<>
         <PageTitle title={"SAFARICH"}/>
@@ -32,6 +74,10 @@ export default function Home() {
                      {/* <Button color={"primary"} auto rounded icon={<Car size={24}/>} >SING UP AS DRIVER</Button> }*/}
                 </div></>}
 
+                <div className="mt-8">
+                    {/*<Text h4>Trips</Text>*/}
+            {trips.map((item, i) =>  <ListItem item={item} />)}
+                </div>
                     {/*<h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>*/}
                     {/*<Caravan size={20}/>*/}
                     {/*<h1 className="text-5xl ">*/}
