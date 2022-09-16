@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const About = () => {
     return (<>
-        <PageTitle title={"ABOUT US"}/>
+        <PageTitle withBackButton title={"ABOUT US"}/>
         <div className="p-8">
             <Text h4>WHY SAFARIA?</Text>
             <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad culpa dignissimos fuga harum labore maiores minus molestiae nisi officia quas qui quia quos rem soluta, ullam velit veritatis vero.</Text>

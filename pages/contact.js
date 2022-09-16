@@ -16,7 +16,7 @@ const Contact = () => {
     };
 
     return (<>
-        <PageTitle title={"SUPPORT"}/>
+        <PageTitle withBackButton title={"SUPPORT"}/>
 
         <div className={"flex relative flex-col z-10 p-8"} >
 
