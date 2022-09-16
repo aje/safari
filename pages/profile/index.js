@@ -2,7 +2,7 @@ import {signOut, useSession} from "next-auth/react";
 import {Avatar, Badge, Button, Card, Dropdown, Navbar, Text} from "@nextui-org/react";
 import {Verified} from "@styled-icons/material-rounded/Verified"
 import {Tab} from '@headlessui/react'
-import Rating from "../../components/Rating";
+import Rating2 from "../../components/Rating2";
 import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
 import LoadingPage from "../../components/LoadingPage";
 import Travelers from "../../components/guide/Travelers";
@@ -29,12 +29,6 @@ export default function Profile() {
     ];
 
 
-    const pictureUsers = [
-        "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-        "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-        "https://i.pravatar.cc/150?u=a04258114e29026702d",
-        "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    ];
     const badges = [
         {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
         {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "this badge"},
@@ -59,7 +53,12 @@ export default function Profile() {
             },
             rating: 5,
             description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-            images: pictureUsers,
+            images: [
+                "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+                "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+                "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+            ],
             timestamp: 1663143033901
         },
     ];
@@ -187,7 +186,7 @@ export default function Profile() {
             <Text h2 className={"mt-2 mb-0 text-gray-600"}>{user.name}</Text>
             <Text >{user.bio || user.email}</Text>
             <div className="flex items-center justify-between">
-                <Rating rating={3.4} count={44}/>
+                <Rating2 rating={3.4} count={44}/>
                 <div className={"flex"}>
                     {/*<Button size={'xs'} icon={<Edit size={16} color={"gray"}/>} light auto></Button>*/}
                     <Dropdown>
