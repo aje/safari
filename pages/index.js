@@ -1,6 +1,5 @@
 import {useSession} from "next-auth/react";
-import React, {useEffect, useState} from "react"
-
+import React, {useState} from "react"
 import {Button, Text, useTheme} from "@nextui-org/react";
 import PageTitle from "../components/PageTitle";
 import Image from "next/image";
@@ -8,9 +7,8 @@ import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
 import {ArrowUpS} from "@styled-icons/remix-line/ArrowUpS";
 import Link from "next/link";
 import ListItem from "../components/trip/ListItem";
-import axios from "../services/api";
 import Empty from "../components/Empty";
-
+import {getTrips} from "../services/api_utils";
 
 
 export default function Home({trips}) {
@@ -78,7 +76,10 @@ export default function Home({trips}) {
             </div>
                  <div className="w-full justify-center my-3 flex">
                      {/*{session ? <>*/}
-                     <Button onPress={()=>setShowTip(false)} className={"mr-4"} icon={<ArrowUpS size={20}/>} rounded light auto>Dismiss</Button>
+                     <Button
+                         // onPress={()=>toast.success('SHOOO')}
+                         onPress={()=>setShowTip(false)}
+                         className={"mr-4"} icon={<ArrowUpS size={20}/>} rounded light auto>Dismiss</Button>
                      <Link href='/upload'><Button as={"a"} color={"primary"} auto rounded icon={<ImageAdd size={24}/>} >Upload a trip</Button></Link>
                      {/*</> :*/}
                      {/* <Button color={"primary"} auto rounded icon={<Car size={24}/>} >SING UP AS DRIVER</Button> }*/}
@@ -112,21 +113,9 @@ export default function Home({trips}) {
     )
 }
 
-export async function getStaticProps() {
-    // console.log("This should load props");
-    const res = await axios.get(`/posts`);
-    const {data: trips} = res.data;
-    // console.log(res.data);
-    // const res = await fetch(`http://127.0.0.1:3000/api/posts`);
-    // const trips = await res.json();
-
-    // if (!trips) {
-    //     return {
-    //         notFound: true,
-    //     };
-    // }
-
+export async function getServerSideProps() {
+    const trips = await getTrips();
     return {
-        props: { trips},
+        props: { trips : JSON.parse(JSON.stringify(trips))},
     };
 }

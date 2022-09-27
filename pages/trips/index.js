@@ -1,7 +1,8 @@
 import React from 'react';
 import PageTitle from "../../components/PageTitle";
-import Link from "next/link";
-import {Card} from "@nextui-org/react"
+import Empty from "../../components/Empty";
+import ListItem from "../../components/trip/ListItem";
+import {getTrips} from "../../services/api_utils";
 
 const Index = ({trips}) => {
     // useEffect(()=>{
@@ -11,29 +12,21 @@ const Index = ({trips}) => {
     // }, []);
     return (<>
         <PageTitle title={"Trips"}/>
-        <div className={"px-5 pt-10 pb-28"}>
-        <Card>
-            <Card.Body>
-                <Link href={"/trips/trip/id"}>GO TO ID</Link>
-            </Card.Body>
-        </Card>
+        <div  className={"px-5 pb-28 relative z-10"}>
+        <div className="mt-8">
+            {/*<Text h4>Trips</Text>*/}
+            {trips?.length === 0 && <Empty/>}
+            {!!trips && trips.map((item, i) =>  <ListItem key={i} item={item} />)}
+        </div>
         </div>
         </>);
 };
 
 export default Index;
-//
-// export async function getStaticProps() {
-//     const res = await fetch(`http://127.0.0.1:3000/api/posts`);
-//     const trips = await res.json();
-//
-//     // if (!trips) {
-//     //     return {
-//     //         notFound: true,
-//     //     };
-//     // }
-//
-//     return {
-//         props: { trips: [] }, // will be passed to the page component as props
-//     };
-// }
+
+export async function getServerSideProps() {
+    const trips = await getTrips();
+    return {
+        props: { trips : JSON.parse(JSON.stringify(trips))},
+    };
+}

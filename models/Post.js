@@ -1,10 +1,17 @@
 import mongoose, {Schema} from "mongoose";
 
-export const PostSchema = new mongoose.Schema({
-    title: String,
-    description: String,
+export const PostSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
+        required: true
     },
     createdAt: {
         type: Date,
@@ -12,11 +19,11 @@ export const PostSchema = new mongoose.Schema({
     },
     gallery: [String],
     reviews: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Review"
     }],
     travelers: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     }],
     user: {

@@ -1,6 +1,5 @@
-import mongoose, {model, models, Schema} from 'mongoose';
+import {model, models, Schema} from 'mongoose';
 import {UserSchema} from "./User";
-import Post from "./Post";
 
 const QualificationSchema = new Schema({
     title: String,

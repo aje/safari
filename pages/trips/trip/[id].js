@@ -6,7 +6,6 @@ import Rating2 from "../../../components/Rating2";
 import Reviews from "../../../components/guide/Reviews";
 import ReviewForm from "../../../components/trip/ReviewForm";
 import {ArrowBack} from "@styled-icons/material-rounded/ArrowBack";
-import axios from "../../../services/api";
 import Post from "../../../models/Post"
 import dbConnect from "../../../services/dbconnect";
 import * as models from "../../../models/models";
@@ -162,14 +161,11 @@ const  Trip = ({item}) => {
 export default Trip;
 
 export async function getServerSideProps({ params }) {
-    console.log(params);
     const {id} = params;
-    //
     await dbConnect();
     let item = null;
     try {
         item = await Post.findOne({ _id: id}).populate({ path: 'user', model: models.User});
-        console.log(id, JSON.parse(JSON.stringify(item)));
     } catch (e) {
         console.log(e);
     }
@@ -177,6 +173,5 @@ export async function getServerSideProps({ params }) {
         props: {
             item: JSON.parse(JSON.stringify(item)),
         },
-        // revalidate: 30,
     };
 }

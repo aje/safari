@@ -4,10 +4,13 @@ import {Button, Input, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "../services/api"
 import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
+import {toast} from "react-hot-toast";
 
 const Upload = () => {
     const { data: session } = useSession();
-    console.log(session);
+    const router = useRouter();
+    // console.log(session);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: "",
@@ -18,7 +21,7 @@ const Upload = () => {
 
     useEffect(()=>{
         if(session)
-            onChange("user")(session.user?._id)
+            onChange("user")(session?.user?._id)
     }, [session]);
 
     const onChange = name => event => {
@@ -28,9 +31,12 @@ const Upload = () => {
     const onSubmit = () => {
         setLoading(true);
         axios.post(`/posts`, formData).then(()=>{
-
+            toast.success("Successfully created!");
+            router.push('/trips')
         }).finally(() => setLoading(false))
     };
+
+    const disabled = formData.title === "" || formData.description === "" || formData.date === "";
 
     return (<>
         <PageTitle withBackButton title={"UPLOAD"}/>
@@ -39,7 +45,7 @@ const Upload = () => {
             <Textarea value={formData.description} onChange={onChange("description")} required  rows={4} size={"lg"} bordered className={"mb-3"} label={"Description *"} placeholder={"Describe the trip with enthusiasm"} />
 
             <Input required value={formData.date} onChange={onChange("date")} size={"lg"} bordered className={"mb-3"} label={"Month of the trip *"} type="month"/>
-            <div><Button auto disabled={loading} onPress={onSubmit} className={"mb-10 mt-3"}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
+            <div><Button auto disabled={loading || disabled} onPress={onSubmit} className={"mb-10 mt-3"}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
                 {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
                 "Publish" }
             </Button></div>
