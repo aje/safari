@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import PageTitle from "../components/PageTitle";
-import {Text, Button, Input, Textarea, Loading} from "@nextui-org/react";
+import {Button, Input, Loading, Text, Textarea} from "@nextui-org/react";
 import Link from "next/link";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "axios"

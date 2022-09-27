@@ -1,5 +1,5 @@
 import {useSession} from "next-auth/react";
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 
 import {Button, Text, useTheme} from "@nextui-org/react";
 import PageTitle from "../components/PageTitle";
@@ -8,55 +8,65 @@ import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
 import {ArrowUpS} from "@styled-icons/remix-line/ArrowUpS";
 import Link from "next/link";
 import ListItem from "../components/trip/ListItem";
+import axios from "../services/api";
+import Empty from "../components/Empty";
 
 
-export default function Home() {
+
+export default function Home({trips}) {
     const { data: session } = useSession();
     const {theme} = useTheme();
     const [showTip, setShowTip] = useState(true);
 
-    const trips = [
-        {
-            id: 1,
-            rating: 5,
-            title: "This was the great trip, one of the best ones really",
-            description: "Lorem  ipsum docolor lorem    ",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                name: "Ariana Wattson",
-            },
-            gallery: [
-                "https://api.lorem.space/image?w=500&h=500",
-                "https://api.lorem.space/image/house?w=500",
-                "https://api.lorem.space/image/car?w=500",
-                "https://api.lorem.space/image/drink?w=500",
-                "https://api.lorem.space/image/burger?w=500",
-                "https://api.lorem.space/image?w=500",
-            ],
-            timestamp: 1663143033901,
-            reviewsCount: 88
-        },
-        {
-            id: 2,
-            rating: 5,
-            title: "This was the great trip",
-            description: "Lorem  ipsum docolor lorem    ",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                name: "Ariana Wattson",
-            },
-            gallery: [
-                "https://api.lorem.space/image?w=450&h=500",
-                "https://api.lorem.space/image/house?w=500",
-                "https://api.lorem.space/image/car?w=500",
-                "https://api.lorem.space/image/drink?w=500",
-                "https://api.lorem.space/image/burger?w=500",
-                "https://api.lorem.space/image?w=500",
-            ],
-            timestamp: 1663143033901,
-            reviewsCount: 150
-        },
-    ];
+    console.log(trips);
+    // useEffect(()=>{
+    //     axios.get(`/posts`).then(r => {
+    //         console.log(r.data);
+    //     })
+    // }, []);
+
+    // const trips = [
+    //     {
+    //         id: 1,
+    //         rating: 5,
+    //         title: "This was the great trip, one of the best ones really",
+    //         description: "Lorem  ipsum docolor lorem    ",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //             name: "Ariana Wattson",
+    //         },
+    //         gallery: [
+    //             "https://api.lorem.space/image?w=500&h=500",
+    //             "https://api.lorem.space/image/house?w=500",
+    //             "https://api.lorem.space/image/car?w=500",
+    //             "https://api.lorem.space/image/drink?w=500",
+    //             "https://api.lorem.space/image/burger?w=500",
+    //             "https://api.lorem.space/image?w=500",
+    //         ],
+    //         timestamp: 1663143033901,
+    //         reviewsCount: 88
+    //     },
+    //     {
+    //         id: 2,
+    //         rating: 5,
+    //         title: "This was the great trip",
+    //         description: "Lorem  ipsum docolor lorem    ",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //             name: "Ariana Wattson",
+    //         },
+    //         gallery: [
+    //             "https://api.lorem.space/image?w=450&h=500",
+    //             "https://api.lorem.space/image/house?w=500",
+    //             "https://api.lorem.space/image/car?w=500",
+    //             "https://api.lorem.space/image/drink?w=500",
+    //             "https://api.lorem.space/image/burger?w=500",
+    //             "https://api.lorem.space/image?w=500",
+    //         ],
+    //         timestamp: 1663143033901,
+    //         reviewsCount: 150
+    //     },
+    // ];
 
     return (<>
         <PageTitle title={"SAFARICH"}/>
@@ -76,7 +86,8 @@ export default function Home() {
 
                 <div className="mt-8">
                     {/*<Text h4>Trips</Text>*/}
-            {trips.map((item, i) =>  <ListItem item={item} />)}
+                    {trips?.length === 0 && <Empty/>}
+                    {!!trips && trips.map((item, i) =>  <ListItem key={i} item={item} />)}
                 </div>
                     {/*<h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>*/}
                     {/*<Caravan size={20}/>*/}
@@ -99,4 +110,23 @@ export default function Home() {
         </div>
         </>
     )
+}
+
+export async function getStaticProps() {
+    // console.log("This should load props");
+    const res = await axios.get(`/posts`);
+    const {data: trips} = res.data;
+    // console.log(res.data);
+    // const res = await fetch(`http://127.0.0.1:3000/api/posts`);
+    // const trips = await res.json();
+
+    // if (!trips) {
+    //     return {
+    //         notFound: true,
+    //     };
+    // }
+
+    return {
+        props: { trips},
+    };
 }

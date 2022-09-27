@@ -8,7 +8,7 @@ const ListItem = ({item}) => {
     const [selectedImage, setSelectedImage] = useState(0);
 
     return (
-        <Link href={`/trips/trip/${item.id}`}>
+        <Link href={`/trips/trip/${item._id}`}>
         <Card className="mb-5" isPressable >
             <Card.Image
                 height={400}
@@ -21,8 +21,8 @@ const ListItem = ({item}) => {
                 <div className="flex-grow">
                     <User
                         className={"pl-0"}
-                        src={item.user.image}
-                        name={item.user.name}
+                        src={item.user?.image}
+                        name={item.user?.name}
                         description={<Moment format={"LL"}>{item.timestamp}</Moment>}
                     />
                 </div>

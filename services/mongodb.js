@@ -1,10 +1,16 @@
-import { MongoClient } from "mongodb"
+import {MongoClient} from "mongodb"
 
 const uri = process.env.MONGODB_URI;
 const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
 };
+let cached = global.mongoose;
+
+if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
+}
+
 
 let client;
 let clientPromise;

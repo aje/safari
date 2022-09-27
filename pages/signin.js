@@ -5,11 +5,9 @@ import {Github} from "@styled-icons/entypo-social/Github";
 import PageTitle from "../components/PageTitle";
 import Link from "next/link";
 
-
 export default function SignIn({ providers }) {
     return (
         <>
-
             <PageTitle title={"Login"}/>
             <div className={"flex relative flex-col z-10 p-8"} >
 

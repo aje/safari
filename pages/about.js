@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PageTitle from "../components/PageTitle";
-import {Text, Button} from "@nextui-org/react";
+import {Text} from "@nextui-org/react";
 import Link from "next/link";
 
 const About = () => {

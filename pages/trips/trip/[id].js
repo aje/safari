@@ -1,87 +1,93 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useRouter} from "next/router";
-import {Card, User, Text, Input, Textarea, Loading, Button} from "@nextui-org/react"
+import {Button, Card, Text, User} from "@nextui-org/react"
 import Moment from "react-moment";
 import Rating2 from "../../../components/Rating2";
 import Reviews from "../../../components/guide/Reviews";
 import ReviewForm from "../../../components/trip/ReviewForm";
 import {ArrowBack} from "@styled-icons/material-rounded/ArrowBack";
+import axios from "../../../services/api";
+import Post from "../../../models/Post"
+import dbConnect from "../../../services/dbconnect";
+import * as models from "../../../models/models";
+import {monthFormat} from "../../../variables";
 
-const  Trip = () => {
-    const item ={
-        rating: 5,
-        title: "This was the great trip",
-        description: "Lorem  ipsum docolor lorem    ",
-        user: {
-            image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-            name: "Ariana Wattson",
-        },
-        gallery: [
-            "https://api.lorem.space/image?w=500&h=500",
-            "https://api.lorem.space/image/house?w=500",
-            "https://api.lorem.space/image/car?w=500",
-            "https://api.lorem.space/image/drink?w=500",
-            "https://api.lorem.space/image/burger?w=500",
-            "https://api.lorem.space/image?w=500",
-        ],
-        timestamp: 1663143033901,
-        travelers: [
-            {
-                id: "sfd",
-                user: {
-                    image: "https://api.lorem.space/image/face?w=50",
-                    name: "Hassan"
-                }
-            },
-            {
-                id: "sfd",
-                user: {
-                    image: "https://api.lorem.space/image/face?w=45",
-                    name: "Behrouz"
-                }
-            },
-            {
-                id: "sfd",
-                user: {
-                    image: "https://api.lorem.space/image/face?w=40",
-                    name: "Morteza"
-                }
-            },
-            {
-                id: "sfd",
-                user: {
-                    image: "https://api.lorem.space/image/face?w=50",
-                    name: "Alen Coucher"
-                }
-            },
-        ],
-        reviews: [
-            {
-                user: {
-                    image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                    name: "Ariana Wattson",
-                },
-                rating: 2.5,
-                description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-                timestamp: 1663143033901
-            },
-            {
-                user: {
-                    image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                    name: "Ariana Wattson Golabforoush",
-                },
-                rating: 5,
-                description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-                images: [
-                    "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-                    "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                    "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                    "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-                ],
-                timestamp: 1663143033901
-            },
-        ]
-    };
+const  Trip = ({item}) => {
+    console.log(item);
+    // const item ={
+    //     rating: 5,
+    //     title: "This was the great trip",
+    //     description: "Lorem  ipsum docolor lorem    ",
+    //     user: {
+    //         image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //         name: "Ariana Wattson",
+    //     },
+    //     gallery: [
+    //         "https://api.lorem.space/image?w=500&h=500",
+    //         "https://api.lorem.space/image/house?w=500",
+    //         "https://api.lorem.space/image/car?w=500",
+    //         "https://api.lorem.space/image/drink?w=500",
+    //         "https://api.lorem.space/image/burger?w=500",
+    //         "https://api.lorem.space/image?w=500",
+    //     ],
+    //     timestamp: 1663143033901,
+    //     travelers: [
+    //         {
+    //             id: "sfd",
+    //             user: {
+    //                 image: "https://api.lorem.space/image/face?w=50",
+    //                 name: "Hassan"
+    //             }
+    //         },
+    //         {
+    //             id: "sfd",
+    //             user: {
+    //                 image: "https://api.lorem.space/image/face?w=45",
+    //                 name: "Behrouz"
+    //             }
+    //         },
+    //         {
+    //             id: "sfd",
+    //             user: {
+    //                 image: "https://api.lorem.space/image/face?w=40",
+    //                 name: "Morteza"
+    //             }
+    //         },
+    //         {
+    //             id: "sfd",
+    //             user: {
+    //                 image: "https://api.lorem.space/image/face?w=50",
+    //                 name: "Alen Coucher"
+    //             }
+    //         },
+    //     ],
+    //     reviews: [
+    //         {
+    //             user: {
+    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //                 name: "Ariana Wattson",
+    //             },
+    //             rating: 2.5,
+    //             description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
+    //             timestamp: 1663143033901
+    //         },
+    //         {
+    //             user: {
+    //                 image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //                 name: "Ariana Wattson Golabforoush",
+    //             },
+    //             rating: 5,
+    //             description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
+    //             images: [
+    //                 "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+    //                 "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //                 "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //                 "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //             ],
+    //             timestamp: 1663143033901
+    //         },
+    //     ]
+    // };
     const [selectedImage, setSelectedImage] = useState(0);
 
     const router = useRouter();
@@ -93,9 +99,9 @@ const  Trip = () => {
                 <User
                     className={"pl-0"}
                     size={"sm"}
-                    src={item.user.image}
-                    name={item.user.name}
-                    description={<Moment format={"LL"}>{item.timestamp}</Moment>}
+                    src={item.user?.image}
+                    name={item.user?.name}
+                    description={<Moment format={monthFormat}>{item.timestamp}</Moment>}
                 />
             </div>
             <Card className={"w-auto px-3 pb-1 rounded-full"}><Rating2 sm readonly value={item.rating} count={item.reviews.length}/></Card>
@@ -129,8 +135,8 @@ const  Trip = () => {
                 <User
                     className={"pl-0"}
                     size={"sm"}
-                    src={traveler.user.image}
-                    name={traveler.user.name}
+                    src={traveler.user?.image}
+                    name={traveler.user?.name}
                 />
             </Card>)}
         </div>
@@ -147,3 +153,23 @@ const  Trip = () => {
 };
 
 export default Trip;
+
+export async function getServerSideProps({ params }) {
+    console.log(params);
+    const {id} = params;
+    //
+    await dbConnect();
+    let item = null;
+    try {
+        item = await Post.findOne({ _id: id}).populate({ path: 'user', model: models.User});
+        console.log(id, JSON.parse(JSON.stringify(item)));
+    } catch (e) {
+        console.log(e);
+    }
+    return {
+        props: {
+            item: JSON.parse(JSON.stringify(item)),
+        },
+        // revalidate: 30,
+    };
+}

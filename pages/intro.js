@@ -66,7 +66,7 @@ const Intro = () => {
             <div className={"flex flex-col z-10 "} style={{height}}>
 
             {slides.map((item, i) => i === step &&
-                <SplashScreenCard slides={slides} changeStep={onChangeStep} {...item} />)}
+                <SplashScreenCard key={i} slides={slides} changeStep={onChangeStep} {...item} />)}
             <div className="flex items-center w-full justify-between p-3">
                 <Button as={Link} href={"/"} rounded light auto>Skip</Button>
                 <div className="flex items-center">
