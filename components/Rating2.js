@@ -5,15 +5,15 @@ import Rating from "react-rating";
 import React from "react";
 
 const Rating2 = ({count, value, lg, sm, ...rest}) => {
-
+    const color =  (count > 0 && count)  ? "":  "#FFC107";
     return (<div className={"flex-shrink-0"}>
         <Rating
             initialRating={value}
             {...rest}
-            fullSymbol={<Star  size={lg ? 28 : sm ? 20 : 24} className={'-mr-1'} color={"#FFC107"}/>}
-            emptySymbol={<StarBorderPurple500   size={lg ? 28 : sm ? 20 : 24} className={'-mr-1'} color={"#FFC107"}/>}
+            fullSymbol={<Star  size={lg ? 28 : sm ? 20 : 24} className={'-mr-1'} color={color}/>}
+            emptySymbol={<StarBorderPurple500   size={lg ? 28 : sm ? 20 : 24} className={'-mr-1'} color={color}/>}
         />
-        {count || count === 0 && <Text span className={"ml-1 align-middle font-bold"} color={"#ecb007"}>({count})</Text>}
+        {count || count === 0 && <Text span className={"ml-1 align-middle font-bold"} color={color}>({count})</Text>}
     </div>);
 };
 

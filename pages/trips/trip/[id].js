@@ -11,9 +11,10 @@ import Post from "../../../models/Post"
 import dbConnect from "../../../services/dbconnect";
 import * as models from "../../../models/models";
 import {monthFormat} from "../../../variables";
+import Empty from "../../../components/Empty";
 
 const  Trip = ({item}) => {
-    console.log(item);
+    // console.log(item);
     // const item ={
     //     rating: 5,
     //     title: "This was the great trip",
@@ -106,8 +107,10 @@ const  Trip = ({item}) => {
             </div>
             <Card className={"w-auto px-3 pb-1 rounded-full"}><Rating2 sm readonly value={item.rating} count={item.reviews.length}/></Card>
         </div>
-
+        {item.gallery.length === 0 ? <Card   className="my-4"><Empty label="No gallery! Please add pictures to publish"/></Card> :
+            <>
         <Card  variant="flat" className="my-3">
+
             <Card.Image
                 src={item.gallery[selectedImage]}
                 objectFit="cover"
@@ -128,18 +131,22 @@ const  Trip = ({item}) => {
                 </Card>
             )}
         </div>
+        </>}
 
-        <Text h6 className={"mt-5"}>Travelers participated in this trip</Text>
-        <div className="flex pb-3 overflow-x-scroll">
-            {item.travelers.map((traveler, i) =>  <Card key={i} variant={"bordered"} className={"w-auto mr-2 flex-shrink-0 rounded-full"}>
-                <User
-                    className={"pl-0"}
-                    size={"sm"}
-                    src={traveler.user?.image}
-                    name={traveler.user?.name}
-                />
-            </Card>)}
-        </div>
+        {item.travelers.length > 0 && <>
+            <Text h6 className={"mt-5"}>Travelers participated in this trip ({item.travelers?.length})</Text>
+            <div className="flex pb-3 overflow-x-scroll">
+                {item.travelers.map((traveler, i) => <Card key={i} variant={"bordered"}
+                                                           className={"w-auto mr-2 flex-shrink-0 rounded-full"}>
+                    <User
+                        className={"pl-0"}
+                        size={"sm"}
+                        src={traveler.user?.image}
+                        name={traveler.user?.name}
+                    />
+                </Card>)}
+            </div>
+        </>}
         <Card className={"mt-2"}>
             <Card.Header><Text h6>{item.title}</Text></Card.Header>
             <Card.Body className={"pt-0"}>{item.description}</Card.Body>
