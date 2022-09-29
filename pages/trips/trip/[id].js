@@ -13,7 +13,7 @@ import {monthFormat} from "../../../variables";
 import Empty from "../../../components/Empty";
 
 const  Trip = ({item}) => {
-    console.log(item);
+    // console.log(item);
     // const item ={
     //     rating: 5,
     //     title: "This was the great trip",

@@ -20,7 +20,7 @@ import {useRouter} from "next/router";
 
 export default function Profile({driver}) {
     const { data: session } = useSession();
-    console.log(driver);
+    // console.log(driver);
 
     const {qualifications, badges, reviews, travelers, achievements} = driver || {};
 
