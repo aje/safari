@@ -1,4 +1,5 @@
 import {Avatar, Card, Progress, Text} from "@nextui-org/react";
+import Empty from "../Empty";
 
 const Achievements = ({data}) => {
     return (<>
@@ -6,6 +7,7 @@ const Achievements = ({data}) => {
             <Card.Header>
                 <Text b>Achievements ({data.length})</Text>
             </Card.Header>
+            {data.length === 0 ? <Empty /> :
 
             <div className={"mx-3"}>
                 {data.map((item, i) => <div key={i} className="flex items-center mb-3">
@@ -19,7 +21,7 @@ const Achievements = ({data}) => {
                         <Progress  size="sm" color="primary" value={parseInt((item.current * 100)/item.max)} />
                     </div>
                 </div>)}
-            </div>
+            </div>}
         </Card>
         </>);
 };

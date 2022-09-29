@@ -9,7 +9,7 @@ export const UserSchema = new Schema({
     role: {
         type: String,
         enum: userRoles
-    }
+    },
 });
 
 export const  User = models.User || model('User', UserSchema);

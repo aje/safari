@@ -1,4 +1,4 @@
-import {useSession} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
 import React, {useState} from "react"
 import {Button, Text, useTheme} from "@nextui-org/react";
 import PageTitle from "../components/PageTitle";
@@ -16,7 +16,6 @@ export default function Home({trips}) {
     const {theme} = useTheme();
     const [showTip, setShowTip] = useState(true);
 
-    console.log(trips);
     // useEffect(()=>{
     //     axios.get(`/posts`).then(r => {
     //         console.log(r.data);
@@ -90,6 +89,8 @@ export default function Home({trips}) {
                     {trips?.length === 0 && <Empty/>}
                     {!!trips && trips.map((item, i) =>  <ListItem key={i} item={item} />)}
                 </div>
+
+                <Button onPress={()=> signOut({ callbackUrl: '/signin' })}>Sign out</Button>
                     {/*<h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>*/}
                     {/*<Caravan size={20}/>*/}
                     {/*<h1 className="text-5xl ">*/}

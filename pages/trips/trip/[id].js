@@ -13,7 +13,7 @@ import {monthFormat} from "../../../variables";
 import Empty from "../../../components/Empty";
 
 const  Trip = ({item}) => {
-    // console.log(item);
+    console.log(item);
     // const item ={
     //     rating: 5,
     //     title: "This was the great trip",
@@ -104,7 +104,11 @@ const  Trip = ({item}) => {
                     description={<Moment format={monthFormat}>{item.timestamp}</Moment>}
                 />
             </div>
-            <Card className={"w-auto px-3 pb-1 rounded-full"}><Rating2 sm readonly value={item.rating} count={item.reviews.length}/></Card>
+            <Card className={"w-auto px-3 pb-1 rounded-full"}>
+                <Rating2 sm readonly value={item.ratingsAverage}
+                         count={item.ratingsQuantity}
+                />
+            </Card>
         </div>
         {item.gallery.length === 0 ? <Card   className="my-4"><Empty label="No gallery! Please add pictures to publish"/></Card> :
             <>
@@ -151,9 +155,9 @@ const  Trip = ({item}) => {
             <Card.Body className={"pt-0"}>{item.description}</Card.Body>
         </Card>
 
-        <ReviewForm id={id}/>
+        <ReviewForm postId={id}/>
 
-            <Reviews data={item.reviews}/>
+            <Reviews data={item.reviews} total={item.ratingsQuantity}/>
 
     </div>);
 };
@@ -165,7 +169,8 @@ export async function getServerSideProps({ params }) {
     await dbConnect();
     let item = null;
     try {
-        item = await Post.findOne({ _id: id}).populate({ path: 'user', model: models.User});
+        item = await Post.findOne({ _id: id}).populate({ path: 'user', model: models.User}).populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
+        // console.log(item);
     } catch (e) {
         console.log(e);
     }

@@ -1,14 +1,16 @@
 import {Avatar, Card, Text} from "@nextui-org/react";
+import Empty from "../Empty";
 
-const Badges = ({badges}) => {
+const Badges = ({data}) => {
     return (
         <Card className={"my-5"}>
             <Card.Header>
-                <Text b>Badges ({badges.length})</Text>
+                <Text b>Badges ({data.length})</Text>
             </Card.Header>
 
+            {data.length === 0 ? <Empty /> :
             <div className={"pl-5 pt-0"}>
-                {badges.map(({url}, index) => (
+                {data.map(({url}, index) => (
                     <Avatar
                         className={"mr-4 mb-2 inline-flex"}
                         squared
@@ -18,7 +20,7 @@ const Badges = ({badges}) => {
                         stacked
                     />
                 ))}
-            </div>
+            </div>}
         </Card>
     );
 };

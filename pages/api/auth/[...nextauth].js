@@ -4,8 +4,10 @@ import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../services/mongodb";
 import dbConnect from "../../../services/dbconnect";
 import User from "../../../models/User"
+import Driver from "../../../models/Driver";
+import {XPS} from "../../../variables";
 
-export default NextAuth({
+export const authOptions ={
     // Configure one or more authentication providers
     providers: [
         GithubProvider({
@@ -18,14 +20,29 @@ export default NextAuth({
     adapter: MongoDBAdapter(clientPromise),
 
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            // console.log(user.id);
+            await dbConnect();
+            try {
+                const driver  = new Driver({user: user.id});
+                driver.save();
+                // const driver  = await Driver.save({user: user.id, xp: XPS.signin});
+            } catch (e) {
+                console.log(e);
+            }
+
+            // console.log(driver);
+            return true
+        },
         async session(session, token) {
             await dbConnect();
             const result = await User.findOne({ email: session.user.email });
             if (result) {
-                console.log("THIS IS RESULT", result);
                 session.user = result;
             }
             return session;
         },
     },
-})
+};
+
+export default NextAuth(authOptions)

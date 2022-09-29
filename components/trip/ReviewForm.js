@@ -3,13 +3,21 @@ import {Button, Card, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "axios";
 import Rating2 from "../Rating2";
+import {toast} from "react-hot-toast";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
-const ReviewForm = ({id}) => {
+const ReviewForm = ({postId}) => {
+    const { data: session } = useSession();
     const [loading, setLoading] = useState(false);
+
     const [formData, setFormData] = useState({
         description: "",
         rating: 0,
+        post: postId,
     });
+
+    const router = useRouter();
 
     const onChange = name => event => {
         setFormData( {...formData, [name]: event?.target ? event.target.value: event });
@@ -17,26 +25,28 @@ const ReviewForm = ({id}) => {
 
     const onSubmit = () => {
         setLoading(true);
-        const data = {...formData, id};
-        axios.post(`/reviewTrip`, data).then(()=>{
-
+        const data = {...formData, user: session?.user?._id};
+        axios.post(`/api/reviews`, data).then(()=>{
+            router.replace(router.asPath);
+            toast.success("Successfully posted!");
         }).finally(() => setLoading(false))
     };
 
     return (<Card className={"mt-5 px-4 py-3"}>
         {/*<Card.Header><Text h6>Review</Text></Card.Header>*/}
 
-        <Textarea required  rows={4} size={"lg"} bordered className={"mb-3"} label={"Review"} placeholder={"You can only review if you have been in this trip"} />
+        <Textarea required onChange={onChange("description")} value={formData.description}  rows={4} size={"lg"} bordered className={"mb-4"} label={"Review"} placeholder={"You can only review if you have been in this trip"} />
 
-        <div className="flex justify-between items-center">
+        <div className="">
             <Rating2
+                className={"mb-4 "}
                 lg
                 value={formData.rating}
                 onChange={onChange("rating")}
             />
-            <Button auto disabled={loading} onPress={onSubmit}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
+            <Button auto disabled={loading || formData.description === "" || formData.rating === 0} onPress={onSubmit}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
                 {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
-                    "Submit" }
+                    "Post" }
             </Button>
         </div>
     </Card>);

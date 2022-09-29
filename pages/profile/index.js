@@ -11,146 +11,153 @@ import Reviews from "../../components/guide/Reviews";
 import Info from "../../components/guide/Info";
 import Level from "../../components/guide/Level";
 import Badges from "../../components/guide/Badges";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Achievements from "../../components/guide/Achievements";
+import {authOptions} from '../api/auth/[...nextauth]';
+import {unstable_getServerSession} from "next-auth/next"
+import * as models from "../../models/models";
+import {useRouter} from "next/router";
 
-
-export default function Profile() {
+export default function Profile({driver}) {
     const { data: session } = useSession();
+    console.log(driver);
+
+    const {qualifications, badges, reviews, travelers, achievements} = driver || {};
 
     const [selectedIndex, setSelectedIndex] = useState(0);
-    if(!session) return <LoadingPage />;
-    const {user}  = session;
+    const user  = session?.user;
 
-    const qualifications = [
-        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
-        {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "Traveling certificate"},
-        {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "Tourism Licence"},
-    ];
+    // console.log(driver);
 
-    const badges = [
-        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
-        {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "this badge"},
-        {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "this badge"},
-        {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
-    ];
-
-    const reviews = [
-        {
-            user: {
-                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                name: "Ariana Wattson",
-            },
-            rating: 2.5,
-            description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-            timestamp: 1663143033901
-        },
-        {
-            user: {
-                image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                name: "Ariana Wattson Golabforoush",
-            },
-            rating: 5,
-            description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-            images: [
-                "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-                "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-            ],
-            timestamp: 1663143033901
-        },
-    ];
-
-    const travelers = [
-        {
-            id: "i",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "is",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "i",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "is",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "ia",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "if",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "is",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "ia",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-        {
-            id: "if",
-            user: {
-                image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-                name: "Ariana Wattson Golabforoush",
-            },
-        },
-    ];
-
-    const achievements = [
-        {
-            image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-            name: "First Trips",
-            action: "Trips added",
-            current: 1,
-            max: 3,
-        },
-        {
-            image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-            name: "First traveler",
-            action: "Traveler invited",
-            current: 2,
-            max: 3,
-        },
-        {
-            image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-            name: "First driver friend",
-            action: "Driver invited",
-            current: 3,
-            max: 3,
-        },
-    ];
+    // const qualifications = [
+    //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
+    //     {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "Traveling certificate"},
+    //     {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "Tourism Licence"},
+    // ];
+    //
+    // const badges = [
+    //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
+    //     {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "this badge"},
+    //     {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "this badge"},
+    //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
+    // ];
+    //
+    // const reviews = [
+    //     {
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //             name: "Ariana Wattson",
+    //         },
+    //         rating: 2.5,
+    //         description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
+    //         timestamp: 1663143033901
+    //     },
+    //     {
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //         rating: 5,
+    //         description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
+    //         images: [
+    //             "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+    //             "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //             "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //             "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //         ],
+    //         timestamp: 1663143033901
+    //     },
+    // ];
+    //
+    // const travelers = [
+    //     {
+    //         id: "i",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "is",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "i",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "is",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "ia",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "if",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "is",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "ia",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    //     {
+    //         id: "if",
+    //         user: {
+    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //             name: "Ariana Wattson Golabforoush",
+    //         },
+    //     },
+    // ];
+    //
+    // const achievements = [
+    //     {
+    //         image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //         name: "First Trips",
+    //         action: "Trips added",
+    //         current: 1,
+    //         max: 3,
+    //     },
+    //     {
+    //         image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    //         name: "First traveler",
+    //         action: "Traveler invited",
+    //         current: 2,
+    //         max: 3,
+    //     },
+    //     {
+    //         image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    //         name: "First driver friend",
+    //         action: "Driver invited",
+    //         current: 3,
+    //         max: 3,
+    //     },
+    // ];
 
     const onMoreMenu = (key) => {
         switch (key) {
@@ -161,12 +168,20 @@ export default function Profile() {
 
                 break;
             case "logout":
-                signOut().then(r => console.log(r));
+                signOut({ callbackUrl: '/signin' });
                 break;
             default:
 
         }
     };
+    const router = useRouter();
+    useEffect(()=>{
+        if(!driver) {
+            router.push("/")
+        }
+    }, [driver]);
+
+    if(!session || !driver) return <LoadingPage />;
 
     return (
         <div className={"px-5 pt-10 pb-28"}>
@@ -183,9 +198,9 @@ export default function Profile() {
                 <Avatar className={"shadow-lg"}  squared src={user.image} css={{ size: "$20" }} text={user.name} />
             </Badge>
             <Text h2 className={"mt-2 mb-0 text-gray-600"}>{user.name}</Text>
-            <Text >{user.bio || user.email}</Text>
+            <Text >{user.email}</Text>
             <div className="flex items-center justify-between">
-                <Rating2 value={3.5} readonly count={44}/>
+                <Rating2 value={3.5} readonly count={reviews.length}/>
                 <div className={"flex"}>
                     {/*<Button size={'xs'} icon={<Edit size={16} color={"gray"}/>} light auto></Button>*/}
                     <Dropdown>
@@ -216,7 +231,7 @@ export default function Profile() {
                     <Tab.Panel>
                         <Level current={260} max={1000} lvl={5}/>
                         <Achievements data={achievements}/>
-                        <Badges badges={badges}/>
+                        <Badges data={badges}/>
                         <Travelers data={travelers}/>
                         <Reviews data={reviews}/>
                     </Tab.Panel>
@@ -231,12 +246,21 @@ export default function Profile() {
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>
-
-
-
-
-
-
         </div>
     )
 }
+
+
+export async function getServerSideProps(context) {
+    const session = await unstable_getServerSession(context.req, context.res, authOptions);
+    let driver = null;
+    try {
+        driver = await models.Driver.findOne({user: {_id: session?.user._id}}).populate({ path: 'reviews', model: models.Review});
+    } catch (e) {
+        console.log(e);
+    }
+    return {
+        props: {driver: JSON.parse(JSON.stringify(driver)) },
+    };
+}
+

@@ -27,15 +27,12 @@ const DriverSchema = new Schema({
         enum : ['ENGLISH','CHINESE', 'FRENCH', 'AFRICANS', 'DUTCH'],
     },
     badges: [BadgesSchema],
-    Achievements: [AchievementSchema],
+    achievements: [AchievementSchema],
     qualifications: [QualificationSchema],
     travelers: [UserSchema],
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: "Review"
-    }],
     xp: Number,
 });
 
-const Driver  = models.Driver || model('Driver', DriverSchema);
+
+export const Driver  = models.Driver || model('Driver', DriverSchema);
 export default Driver;

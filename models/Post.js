@@ -18,10 +18,8 @@ export const PostSchema = new Schema({
         default: new Date(),
     },
     gallery: [String],
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: "Review"
-    }],
+    ratingsQuantity: Number,
+    ratingsAverage: Number,
     travelers: [{
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -30,6 +28,16 @@ export const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+},{
+    toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+    toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 });
-const Post  = mongoose.models.Post ||  mongoose.model('Post', PostSchema);
+
+PostSchema.virtual('reviews', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'post'
+});
+
+export const Post  = mongoose.models.Post ||  mongoose.model('Post', PostSchema);
 export default Post;
