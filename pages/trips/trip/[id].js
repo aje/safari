@@ -169,7 +169,9 @@ export async function getServerSideProps({ params }) {
     await dbConnect();
     let item = null;
     try {
-        item = await Post.findOne({ _id: id}).populate({ path: 'user', model: models.User}).populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
+        item = await Post.findOne({ _id: id})
+            .populate({ path: 'user', model: models.User})
+            .populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
         // console.log(item);
     } catch (e) {
         console.log(e);

@@ -1,5 +1,6 @@
 import {model, models, Schema} from 'mongoose';
 import {UserSchema} from "./User";
+import {PostSchema} from "./Post";
 
 const QualificationSchema = new Schema({
     title: String,
@@ -30,9 +31,24 @@ const DriverSchema = new Schema({
     achievements: [AchievementSchema],
     qualifications: [QualificationSchema],
     travelers: [UserSchema],
-    xp: Number,
+    ratingsQuantity: Number,
+    ratingsAverage: Number,
+    lastSignIn: {
+        type: Date,
+        default: Date.now()
+    },
+    xp: {type: Number, default: 0},
+},{
+    toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+    toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 });
 
+
+DriverSchema.virtual('reviews', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'user'
+});
 
 export const Driver  = models.Driver || model('Driver', DriverSchema);
 export default Driver;

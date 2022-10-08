@@ -22,7 +22,7 @@ export default function Profile({driver}) {
     const { data: session } = useSession();
     // console.log(driver);
 
-    const {qualifications, badges, reviews, travelers, achievements} = driver || {};
+    const {qualifications, badges,  travelers, achievements, xp} = driver || {};
 
     const [selectedIndex, setSelectedIndex] = useState(0);
     const user  = session?.user;
@@ -200,7 +200,7 @@ export default function Profile({driver}) {
             <Text h2 className={"mt-2 mb-0 text-gray-600"}>{user.name}</Text>
             <Text >{user.email}</Text>
             <div className="flex items-center justify-between">
-                <Rating2 value={3.5} readonly count={reviews.length}/>
+                {/*<Rating2 value={3.5} readonly count={reviews.length}/>*/}
                 <div className={"flex"}>
                     {/*<Button size={'xs'} icon={<Edit size={16} color={"gray"}/>} light auto></Button>*/}
                     <Dropdown>
@@ -229,11 +229,11 @@ export default function Profile({driver}) {
                 </Navbar>
                 <Tab.Panels>
                     <Tab.Panel>
-                        <Level current={260} max={1000} lvl={5}/>
+                        <Level current={xp} max={1000} lvl={parseInt(xp/1000)}/>
                         <Achievements data={achievements}/>
                         <Badges data={badges}/>
                         <Travelers data={travelers}/>
-                        <Reviews data={reviews}/>
+                        {/*<Reviews data={reviews}/>*/}
                     </Tab.Panel>
                     <Tab.Panel>
                         <Info  data={{
@@ -250,12 +250,13 @@ export default function Profile({driver}) {
     )
 }
 
-
 export async function getServerSideProps(context) {
     const session = await unstable_getServerSession(context.req, context.res, authOptions);
     let driver = null;
     try {
-        driver = await models.Driver.findOne({user: {_id: session?.user._id}}).populate({ path: 'reviews', model: models.Review});
+        driver = await models.Driver.findOne({user: {_id: session?.user._id}})
+            .populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
+            // .populate({ path: 'reviews', model: models.Review});
     } catch (e) {
         console.log(e);
     }

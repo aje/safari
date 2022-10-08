@@ -29,7 +29,7 @@ const ListItem = ({item}) => {
                         description={<Moment format={"LL"}>{item.timestamp}</Moment>}
                     />
                 </div>
-                <Rating2 value={item.rating} sm readonly count={item.reviewsCount}/>
+                <Rating2 value={item.ratingsAverage} sm readonly count={item.ratingsQuantity}/>
 
             </Card.Footer>
 

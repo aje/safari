@@ -24,9 +24,17 @@ export const authOptions ={
             // console.log(user.id);
             await dbConnect();
             try {
-                const driver  = new Driver({user: user.id});
-                driver.save();
-                // const driver  = await Driver.save({user: user.id, xp: XPS.signin});
+                const driverFromDB = await Driver.findOne({user: user.id});
+                if(driverFromDB) {
+                    // console.log("IT's Already a driver",driverFromDB);
+                    // todo check the driverFromDB.lastSignIn and if it's the same day don't update the xp
+                    driverFromDB.xp  += 100;
+                    driverFromDB.save();
+                    const driver  = new Driver({user: user.id, xp: 100});
+                } else {
+                    const driver  = new Driver({user: user.id, xp: 100});
+                    driver.save();
+                }
             } catch (e) {
                 console.log(e);
             }

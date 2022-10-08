@@ -1,5 +1,5 @@
 import {model, models, Schema} from "mongoose";
-import Post from "./Post";
+import * as myModels from "./models";
 
 export const ReviewSchema = new Schema({
     description: {
@@ -27,9 +27,23 @@ export const ReviewSchema = new Schema({
     },
 });
 
-ReviewSchema.statics.calcAverageRatings = async function(postId) {
+ReviewSchema.statics.calcAverageRatings = async function(postId, userId) {
+    // console.log("[calcAverageRatings]",  userId);
     // this points to current model
     // console.log("[calcAverageRatings]");
+
+    const statsDriver = await this.aggregate([
+        {
+            $match: { user: userId }
+        },
+        {
+            $group: {
+                _id: '$post',
+                nRatings: { $sum: 1 },
+                avgRating: { $avg: '$rating' }
+            }
+        }
+    ]);
 
     const stats = await this.aggregate([
         {
@@ -43,12 +57,22 @@ ReviewSchema.statics.calcAverageRatings = async function(postId) {
             }
         }
     ]);
-
-    await Post.findByIdAndUpdate(postId, {
+    await myModels.Post.findByIdAndUpdate(postId, {
         ratingsQuantity: stats[0].nRatings,
         ratingsAverage: stats[0].avgRating
     });
-    // console.log(stats);
+    //
+    // console.log("[StatsDriver]", statsDriver);
+
+    try {
+        const t = await myModels.Driver.findOneAndUpdate({user: userId}, {
+            ratingsQuantity: statsDriver[0].nRatings,
+            ratingsAverage: statsDriver[0].avgRating
+        });
+        // console.log("[RESULT]",t);
+    } catch (e) {
+        console.log(e)
+    }
 };
 
 ReviewSchema.pre(/^findOneAnd/, async function(next) {
@@ -58,17 +82,17 @@ ReviewSchema.pre(/^findOneAnd/, async function(next) {
 });
 
 ReviewSchema.post(/^findOneAnd/, async function(next) {
-    await this.r.constructor.calcAverageRatings(this.r.post)
+    await this.r.constructor.calcAverageRatings(this.r.post, this.r.user)
 });
 
 ReviewSchema.post('save', function() {
-    // console.log("[POST SAVE]");
-    this.constructor.calcAverageRatings(this.post);
+    console.log("[POST SAVE]",  this.post);
+    this.constructor.calcAverageRatings(this.post, this.user);
 });
 
 ReviewSchema.post('create', function() {
-    // console.log("[POST create]");
-    this.constructor.calcAverageRatings(this.post);
+    console.log("[POST create]", this.user);
+    this.constructor.calcAverageRatings(this.post, this.user);
 });
 
 
