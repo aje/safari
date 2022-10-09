@@ -2,20 +2,18 @@ import {signOut, useSession} from "next-auth/react";
 import {Avatar, Badge, Button, Card, Dropdown, Navbar, Text} from "@nextui-org/react";
 import {Verified} from "@styled-icons/material-rounded/Verified"
 import {Tab} from '@headlessui/react'
-import Rating2 from "../../components/Rating2";
 import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
-import LoadingPage from "../../components/LoadingPage";
-import Travelers from "../../components/guide/Travelers";
-import Qualifications from "../../components/guide/Qualifications";
-import Reviews from "../../components/guide/Reviews";
-import Info from "../../components/guide/Info";
-import Level from "../../components/guide/Level";
-import Badges from "../../components/guide/Badges";
+import LoadingPage from "../../../components/LoadingPage";
+import Travelers from "../../../components/guide/Travelers";
+import Qualifications from "../../../components/guide/Qualifications";
+import Info from "../../../components/guide/Info";
+import Level from "../../../components/guide/Level";
+import Badges from "../../../components/guide/Badges";
 import React, {useEffect, useState} from "react";
-import Achievements from "../../components/guide/Achievements";
+import Achievements from "../../../components/guide/Achievements";
 import {authOptions} from '../api/auth/[...nextauth]';
 import {unstable_getServerSession} from "next-auth/next"
-import * as models from "../../models/models";
+import * as models from "../../../models/models";
 import {useRouter} from "next/router";
 
 export default function Profile({driver}) {

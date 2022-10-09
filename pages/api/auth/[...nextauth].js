@@ -5,7 +5,6 @@ import clientPromise from "../../../services/mongodb";
 import dbConnect from "../../../services/dbconnect";
 import User from "../../../models/User"
 import Driver from "../../../models/Driver";
-import {XPS} from "../../../variables";
 
 export const authOptions ={
     // Configure one or more authentication providers

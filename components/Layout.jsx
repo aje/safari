@@ -3,6 +3,7 @@ import {useSession} from "next-auth/react";
 import BackgroundGradient from "./BackgroundGradient";
 import React from "react";
 import {useRouter} from "next/router";
+import {Toaster} from "react-hot-toast";
 
 const Layout = ({children, noNav}) => {
     const { data: session } = useSession();
@@ -12,6 +13,8 @@ const Layout = ({children, noNav}) => {
             <BackgroundGradient />
             {session && <Nav />}
             <main className={"z-20 relative"} >{children}</main>
+
+            <Toaster reverseOrder />
         {/*<Footer />*/}
         </>
 )

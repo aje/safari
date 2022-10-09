@@ -5,7 +5,6 @@ import Layout from "../components/Layout";
 import {useRouter} from 'next/router';
 import {useEffect, useState} from "react";
 import LoadingPage from "../components/LoadingPage";
-import {Toaster} from "react-hot-toast";
 
 const fonts = {
     sans: "'Century Gothic',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
@@ -67,7 +66,6 @@ export default function App({Component,pageProps: { session, ...pageProps }}) {
                 <Layout>
                     {loading ? <LoadingPage/> :
                     <Component {...pageProps} />}
-                    <Toaster reverseOrder />
                 </Layout>
             </SessionProvider>
         </NextUIProvider>
