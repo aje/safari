@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Card, Text, User} from "@nextui-org/react";
 import Moment from "react-moment";
-import Rating2 from "../Rating2";
+import MyRating from "../MyRating";
 import Link from "next/link";
 import Empty from "../Empty";
 
@@ -29,7 +29,7 @@ const ListItem = ({item}) => {
                         description={<Moment format={"LL"}>{item.timestamp}</Moment>}
                     />
                 </div>
-                <Rating2 value={item.ratingsAverage} sm readonly count={item.ratingsQuantity}/>
+                <MyRating value={item.ratingsAverage} sm readonly count={item.ratingsQuantity}/>
 
             </Card.Footer>
 

@@ -12,8 +12,8 @@ import {getTrips} from "../services/api_utils";
 
 
 export default function Home({trips}) {
-    const { data: session } = useSession();
-    const {theme} = useTheme();
+    // const { data: session } = useSession();
+    // const {theme} = useTheme();
     const [showTip, setShowTip] = useState(true);
 
     // useEffect(()=>{
@@ -83,13 +83,13 @@ export default function Home({trips}) {
                      {/*</> :*/}
                      {/* <Button color={"primary"} auto rounded icon={<Car size={24}/>} >SING UP AS DRIVER</Button> }*/}
                 </div></>}
-
+        
                 <div className="mt-8">
-                    {/*<Text h4>Trips</Text>*/}
+                    <Text h4>Trips</Text>
                     {trips?.length === 0 && <Empty/>}
                     {!!trips && trips.map((item, i) =>  <ListItem key={i} item={item} />)}
                 </div>
-
+        
                 <Button onPress={()=> signOut({ callbackUrl: '/signin' })}>Sign out</Button>
                     {/*<h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>*/}
                     {/*<Caravan size={20}/>*/}
@@ -98,11 +98,11 @@ export default function Home({trips}) {
                     {/*        {session.user.email}*/}
                     {/*        <button onClick={() => signOut()}>Sign out</button>*/}
                     {/*    </>}*/}
-
+        
                     {/*    */}
                     {/*</h1>*/}
-
-
+        
+        
                     {/*<Link href={'/pages/signin'}>*/}
                     {/*    <a onClick={e=> {*/}
                     {/*        e.preventDefault();*/}

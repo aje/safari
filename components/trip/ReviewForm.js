@@ -2,19 +2,19 @@ import React, {useState} from 'react';
 import {Button, Card, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "axios";
-import Rating2 from "../Rating2";
+import MyRating from "../MyRating";
 import {toast} from "react-hot-toast";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 
-const ReviewForm = ({postId}) => {
+const ReviewForm = ({post}) => {
     const { data: session } = useSession();
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         description: "",
         rating: 0,
-        post: postId,
+        post: post.id,
     });
 
     const router = useRouter();
@@ -24,8 +24,10 @@ const ReviewForm = ({postId}) => {
     };
 
     const onSubmit = () => {
+        console.log(post);
+
         setLoading(true);
-        const data = {...formData, user: session?.user?._id};
+        const data = {...formData, author: session?.user?._id, reviewee: post.user._id};
         axios.post(`/api/reviews`, data).then(()=>{
             router.replace(router.asPath);
             toast.success("Successfully posted!");
@@ -38,7 +40,7 @@ const ReviewForm = ({postId}) => {
         <Textarea required onChange={onChange("description")} value={formData.description}  rows={4} size={"lg"} bordered className={"mb-4"} label={"Review"} placeholder={"You can only review if you have been in this trip"} />
 
         <div className="">
-            <Rating2
+            <MyRating
                 className={"mb-4 "}
                 lg
                 value={formData.rating}

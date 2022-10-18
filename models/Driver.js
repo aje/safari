@@ -1,6 +1,5 @@
 import {model, models, Schema} from 'mongoose';
 import {UserSchema} from "./User";
-import {PostSchema} from "./Post";
 
 const QualificationSchema = new Schema({
     title: String,
@@ -46,8 +45,8 @@ const DriverSchema = new Schema({
 
 DriverSchema.virtual('reviews', {
     ref: 'Review',
-    localField: '_id',
-    foreignField: 'user'
+    localField: 'user',
+    foreignField: 'reviewee'
 });
 
 export const Driver  = models.Driver || model('Driver', DriverSchema);

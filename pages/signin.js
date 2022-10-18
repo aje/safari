@@ -6,6 +6,7 @@ import PageTitle from "../components/PageTitle";
 import Link from "next/link";
 
 export default function SignIn({ providers }) {
+    console.log(providers);
     return (
         <>
             <PageTitle title={"Login"}/>
@@ -17,11 +18,12 @@ export default function SignIn({ providers }) {
                 <Button size={"lg"} className={"mb-12"} color={"primary"} rounded>Login</Button>
 
                 <Text h6 className={"mb-5 text-center text-gray-700 font-normal"}>Or continue with social</Text>
-                {Object.values(providers).map((provider) => (
-                    <Button className={"mb-4"} key={provider.name} size={"lg"} icon={<Github size={30} />} bordered onClick={() => signIn(provider.id)}>
-                        Sign in with {provider.name}
+                {/*{Object.values(providers).map((provider) => (*/}
+                    <Button className={"mb-4"} size={"lg"} icon={<Github size={30} />} bordered onClick={() => signIn('github')}>
+                        Sign in with Github
                     </Button>
-                ))}
+                {/*))}*/}
+                
 
                 <div className="flex mt-10 justify-around px-10">
                     <Link href={"/about"} className={"mr-5"}>About Us</Link>

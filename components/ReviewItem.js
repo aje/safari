@@ -1,6 +1,6 @@
 import {Avatar, Text, User} from "@nextui-org/react";
 import Moment from "react-moment";
-import Rating2 from "./Rating2";
+import MyRating from "./MyRating";
 
 const ReviewItem = ({item}) => {
     return (<div className={"mb-5"}>
@@ -8,11 +8,11 @@ const ReviewItem = ({item}) => {
             <User
                 className={"pl-0"}
                 size={"sm"}
-                src={item.user.image}
-                name={item.user.name}
+                src={item.author.image}
+                name={item.author.name}
                 description={<Moment format={"LL"}>{item.timestamp}</Moment>}
             />
-            <Rating2 sm value={item.rating} readonly/>
+            <MyRating sm value={item.rating} readonly/>
         </div>
         <Text className={"pl-10"}>{item.description}</Text>
         <div className={"pl-12 pt-3"}>

@@ -3,18 +3,20 @@ import {Avatar, Badge, Button, Card, Dropdown, Navbar, Text} from "@nextui-org/r
 import {Verified} from "@styled-icons/material-rounded/Verified"
 import {Tab} from '@headlessui/react'
 import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
-import LoadingPage from "../../../components/LoadingPage";
-import Travelers from "../../../components/guide/Travelers";
-import Qualifications from "../../../components/guide/Qualifications";
-import Info from "../../../components/guide/Info";
-import Level from "../../../components/guide/Level";
-import Badges from "../../../components/guide/Badges";
+import LoadingPage from "../../components/LoadingPage";
+import Travelers from "../../components/guide/Travelers";
+import Qualifications from "../../components/guide/Qualifications";
+import Info from "../../components/guide/Info";
+import Level from "../../components/guide/Level";
+import Badges from "../../components/guide/Badges";
 import React, {useEffect, useState} from "react";
-import Achievements from "../../../components/guide/Achievements";
+import Achievements from "../../components/guide/Achievements";
 import {authOptions} from '../api/auth/[...nextauth]';
 import {unstable_getServerSession} from "next-auth/next"
-import * as models from "../../../models/models";
+import * as models from "../../models/models";
 import {useRouter} from "next/router";
+import MyRating from "../../components/MyRating";
+import Reviews from "../../components/guide/Reviews";
 
 export default function Profile({driver}) {
     const { data: session } = useSession();
@@ -25,7 +27,7 @@ export default function Profile({driver}) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const user  = session?.user;
 
-    // console.log(driver);
+    console.log(driver);
 
     // const qualifications = [
     //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
@@ -198,7 +200,7 @@ export default function Profile({driver}) {
             <Text h2 className={"mt-2 mb-0 text-gray-600"}>{user.name}</Text>
             <Text >{user.email}</Text>
             <div className="flex items-center justify-between">
-                {/*<Rating2 value={3.5} readonly count={reviews.length}/>*/}
+                <MyRating value={driver.ratingsAverage} readonly count={driver.ratingsQuantity}/>
                 <div className={"flex"}>
                     {/*<Button size={'xs'} icon={<Edit size={16} color={"gray"}/>} light auto></Button>*/}
                     <Dropdown>
@@ -231,6 +233,7 @@ export default function Profile({driver}) {
                         <Achievements data={achievements}/>
                         <Badges data={badges}/>
                         <Travelers data={travelers}/>
+                        <Reviews data={driver.reviews} total={driver.ratingsQuantity}/>
                         {/*<Reviews data={reviews}/>*/}
                     </Tab.Panel>
                     <Tab.Panel>
@@ -253,7 +256,7 @@ export async function getServerSideProps(context) {
     let driver = null;
     try {
         driver = await models.Driver.findOne({user: {_id: session?.user._id}})
-            .populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
+            .populate({ path: 'reviews', select: 'post author rating description createdAt', options: { sort: { 'createdAt': -1 } }})
             // .populate({ path: 'reviews', model: models.Review});
     } catch (e) {
         console.log(e);

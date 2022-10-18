@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useRouter} from "next/router";
 import {Button, Card, Text, User} from "@nextui-org/react"
 import Moment from "react-moment";
-import Rating2 from "../../../components/Rating2";
+import MyRating from "../../../components/MyRating";
 import Reviews from "../../../components/guide/Reviews";
 import ReviewForm from "../../../components/trip/ReviewForm";
 import {ArrowBack} from "@styled-icons/material-rounded/ArrowBack";
@@ -91,7 +91,9 @@ const  Trip = ({item}) => {
     const [selectedImage, setSelectedImage] = useState(0);
 
     const router = useRouter();
-    const { id } = router.query;
+
+    console.log(item);
+    // const { id } = router.query;
     return (<div className={"pt-2 px-4 pb-28"}>
         <div className="flex items-center justify-between">
             <Button  onClick={() => router.back()} className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0 -ml-2 mr-1'} light auto><ArrowBack size={26}/></Button>
@@ -105,8 +107,8 @@ const  Trip = ({item}) => {
                 />
             </div>
             <Card className={"w-auto px-3 pb-1 rounded-full"}>
-                <Rating2 sm readonly value={item.ratingsAverage}
-                         count={item.ratingsQuantity}
+                <MyRating sm readonly value={item.ratingsAverage}
+                          count={item.ratingsQuantity}
                 />
             </Card>
         </div>
@@ -136,28 +138,27 @@ const  Trip = ({item}) => {
         </div>
         </>}
 
-        {item.travelers.length > 0 && <>
-            <Text h6 className={"mt-5"}>Travelers participated in this trip ({item.travelers?.length})</Text>
-            <div className="flex pb-3 overflow-x-scroll">
-                {item.travelers.map((traveler, i) => <Card key={i} variant={"bordered"}
-                                                           className={"w-auto mr-2 flex-shrink-0 rounded-full"}>
-                    <User
-                        className={"pl-0"}
-                        size={"sm"}
-                        src={traveler.user?.image}
-                        name={traveler.user?.name}
-                    />
-                </Card>)}
-            </div>
-        </>}
+        {/*{item.travelers.length > 0 && <>*/}
+        {/*    <Text h6 className={"mt-5"}>Travelers participated in this trip ({item.travelers?.length})</Text>*/}
+        {/*    <div className="flex pb-3 overflow-x-scroll">*/}
+        {/*        {item.travelers.map((traveler, i) => <Card key={i} variant={"bordered"}*/}
+        {/*                                                   className={"w-auto mr-2 flex-shrink-0 rounded-full"}>*/}
+        {/*            <User*/}
+        {/*                className={"pl-0"}*/}
+        {/*                size={"sm"}*/}
+        {/*                src={traveler.user?.image}*/}
+        {/*                name={traveler.user?.name}*/}
+        {/*            />*/}
+        {/*        </Card>)}*/}
+        {/*    </div>*/}
+        {/*</>}*/}
         <Card className={"mt-2"}>
             <Card.Header><Text h6>{item.title}</Text></Card.Header>
             <Card.Body className={"pt-0"}>{item.description}</Card.Body>
         </Card>
 
-        <ReviewForm postId={id}/>
-
-            <Reviews data={item.reviews} total={item.ratingsQuantity}/>
+        <ReviewForm post={item}/>
+        <Reviews data={item.reviews} total={item.ratingsQuantity}/>
 
     </div>);
 };
@@ -169,9 +170,8 @@ export async function getServerSideProps({ params }) {
     await dbConnect();
     let item = null;
     try {
-        item = await Post.findOne({ _id: id})
-            .populate({ path: 'user', model: models.User})
-            .populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
+        item = await Post.findOne({ _id: id}).populate({ path: 'user', model: models.User})
+            .populate({ path: 'reviews', select: 'post author rating description createdAt', options: { sort: { 'createdAt': -1 } }});
         // console.log(item);
     } catch (e) {
         console.log(e);

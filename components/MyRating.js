@@ -4,7 +4,7 @@ import {Text} from "@nextui-org/react";
 import Rating from "react-rating";
 import React from "react";
 
-const Rating2 = ({count, value, lg, sm, ...rest}) => {
+const MyRating = ({count, value, lg, sm, ...rest}) => {
     const color = "#FFC107";
     return (<div className={"flex-shrink-0"}>
         <Rating
@@ -17,4 +17,4 @@ const Rating2 = ({count, value, lg, sm, ...rest}) => {
     </div>);
 };
 
-export default Rating2;
+export default MyRating;

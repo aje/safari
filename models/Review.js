@@ -6,10 +6,15 @@ export const ReviewSchema = new Schema({
         type: String,
         required: [true, 'Review cannot be empty!']
     },
-    user: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: [true, 'Review must have an author']
+    },
+    reviewee: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: [true, 'Review must have an reviewee']
     },
     rating: {
         type: Number,
@@ -69,6 +74,10 @@ ReviewSchema.statics.calcAverageRatings = async function(postId, userId) {
             ratingsQuantity: statsDriver[0].nRatings,
             ratingsAverage: statsDriver[0].avgRating
         });
+        // const t = await myModels.Driver.findOneAndUpdate({user: userId}, {
+        //     ratingsQuantity: statsDriver[0].nRatings,
+        //     ratingsAverage: statsDriver[0].avgRating
+        // });
         // console.log("[RESULT]",t);
     } catch (e) {
         console.log(e)
