@@ -27,7 +27,7 @@ export default function Profile({driver}) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const user  = session?.user;
 
-    console.log(driver);
+    // console.log(driver);
 
     // const qualifications = [
     //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
@@ -237,13 +237,13 @@ export default function Profile({driver}) {
                         {/*<Reviews data={reviews}/>*/}
                     </Tab.Panel>
                     <Tab.Panel>
+                        <Qualifications data={qualifications}/>
                         <Info  data={{
                             bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto beatae consequatur deserunt dignissimos dolorem eaque eius eos est iusto officia quidem rem reprehenderit repudiandae sit unde, velit voluptates voluptatum!",
                             languages: "English, Chinese",
                             age: 33,
                             experience: 10
                         }}/>
-                        <Qualifications data={qualifications}/>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>

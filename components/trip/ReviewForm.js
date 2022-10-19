@@ -24,7 +24,7 @@ const ReviewForm = ({post}) => {
     };
 
     const onSubmit = () => {
-        console.log(post);
+        // console.log(post);
 
         setLoading(true);
         const data = {...formData, author: session?.user?._id, reviewee: post.user._id};
