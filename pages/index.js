@@ -9,6 +9,7 @@ import Link from "next/link";
 import ListItem from "../components/trip/ListItem";
 import Empty from "../components/Empty";
 import {getTrips} from "../services/api_utils";
+import {useRouter} from "next/router";
 
 
 export default function Home({trips}) {
@@ -64,6 +65,7 @@ export default function Home({trips}) {
     //         reviewsCount: 150
     //     },
     // ];
+    const router = useRouter();
 
     return (<>
         <PageTitle title={"SAFARICH"}/>
@@ -79,7 +81,7 @@ export default function Home({trips}) {
                          // onPress={()=>toast.success('SHOOO')}
                          onPress={()=>setShowTip(false)}
                          className={"mr-4"} icon={<ArrowUpS size={20}/>} rounded light auto>Dismiss</Button>
-                     <Link href='/upload'><Button as={"a"} color={"primary"} auto rounded icon={<ImageAdd size={24}/>} >Upload a trip</Button></Link>
+                     <Button onPress={()=>router.push("/upload")}  color={"primary"} auto rounded icon={<ImageAdd size={24}/>} >Upload a trip</Button>
                      {/*</> :*/}
                      {/* <Button color={"primary"} auto rounded icon={<Car size={24}/>} >SING UP AS DRIVER</Button> }*/}
                 </div></>}
