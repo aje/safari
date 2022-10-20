@@ -20,152 +20,19 @@ import Reviews from "../../components/guide/Reviews";
 
 export default function Profile({driver}) {
     const { data: session } = useSession();
-    console.log(driver);
 
     const {qualifications, badges,  travelers, achievements, xp} = driver || {};
 
     const [selectedIndex, setSelectedIndex] = useState(0);
     const user  = session?.user;
 
-    // console.log(driver);
-
-    // const qualifications = [
-    //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "Certification of Traveling"},
-    //     {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "Traveling certificate"},
-    //     {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "Tourism Licence"},
-    // ];
-    //
-    // const badges = [
-    //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
-    //     {url: "https://i.pravatar.cc/150?u=a042581f4e29026704d", name: "this badge"},
-    //     {url: "https://i.pravatar.cc/150?u=a04258114e29026702d", name: "this badge"},
-    //     {url: "https://i.pravatar.cc/150?u=a048581f4e29026701d", name: "this badge"},
-    // ];
-    //
-    // const reviews = [
-    //     {
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //             name: "Ariana Wattson",
-    //         },
-    //         rating: 2.5,
-    //         description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //         timestamp: 1663143033901
-    //     },
-    //     {
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //         rating: 5,
-    //         description: "This trip was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //         images: [
-    //             "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    //             "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //             "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //             "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //         ],
-    //         timestamp: 1663143033901
-    //     },
-    // ];
-    //
-    // const travelers = [
-    //     {
-    //         id: "i",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "is",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "i",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "is",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "ia",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "if",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "is",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "ia",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    //     {
-    //         id: "if",
-    //         user: {
-    //             image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //             name: "Ariana Wattson Golabforoush",
-    //         },
-    //     },
-    // ];
-    //
-    // const achievements = [
-    //     {
-    //         image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //         name: "First Trips",
-    //         action: "Trips added",
-    //         current: 1,
-    //         max: 3,
-    //     },
-    //     {
-    //         image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //         name: "First traveler",
-    //         action: "Traveler invited",
-    //         current: 2,
-    //         max: 3,
-    //     },
-    //     {
-    //         image: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //         name: "First driver friend",
-    //         action: "Driver invited",
-    //         current: 3,
-    //         max: 3,
-    //     },
-    // ];
-
     const onMoreMenu = (key) => {
         switch (key) {
             case "upload":
-
+                router.push("/profile/upload_qu")
                 break;
             case "edit":
-
+                router.push("/profile/edit")
                 break;
             case "logout":
                 signOut({ callbackUrl: '/signin' });
@@ -238,12 +105,7 @@ export default function Profile({driver}) {
                     </Tab.Panel>
                     <Tab.Panel>
                         <Qualifications data={qualifications}/>
-                        <Info  data={{
-                            bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto beatae consequatur deserunt dignissimos dolorem eaque eius eos est iusto officia quidem rem reprehenderit repudiandae sit unde, velit voluptates voluptatum!",
-                            languages: "English, Chinese",
-                            age: 33,
-                            experience: 10
-                        }}/>
+                        <Info driver={driver}/>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>

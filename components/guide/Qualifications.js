@@ -1,11 +1,7 @@
 import {Avatar, Button, Card, Text} from "@nextui-org/react";
 import Empty from "../Empty";
 import {Upload} from "@styled-icons/entypo/Upload";
-import axios from "axios";
-import {uploadFile} from "../../services/clientUtils";
-import Link from "next/link";
 import {useRouter} from "next/router";
-// import {uploadFile} from "../../services/api_utils";
 
 const Qualifications = ({data}) => {
     // const [image, setImage] = useState(null);
@@ -43,7 +39,7 @@ const Qualifications = ({data}) => {
         <Card className={"my-5"}>
             <Card.Header className={"justify-between"}>
                 <Text b>Qualifications ({data.length})</Text>
-                <Button size={"xs"} bordered color={"success"} auto icon={ <Upload size={16}/>} onPress={()=>router.push("/upload_qu")}>
+                <Button size={"xs"} bordered color={"success"} auto icon={ <Upload size={16}/>} onPress={()=>router.push("/profile/upload_qu")}>
                     Upload
                 </Button>
             </Card.Header>
@@ -51,7 +47,7 @@ const Qualifications = ({data}) => {
                 {/*<img src={createObjectURL} />*/}
                 {data.length === 0 ? <Empty
                         noIcon
-                        extra={<Button size={"sm"} auto icon={ <Upload size={16}/>} onPress={()=>router.push("/upload_qu")}>
+                        extra={<Button size={"sm"} auto icon={ <Upload size={16}/>} onPress={()=>router.push("/profile/upload_qu")}>
                             Upload Qualification
                             </Button>}/>
                 : data.map((item, i) => <div key={i} className="flex mb-3 items-center justify-between">

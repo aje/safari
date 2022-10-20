@@ -22,10 +22,7 @@ const DriverSchema = new Schema({
     bio: String,
     birthday: Date,
     yearOfStart: Date,
-    languages: {
-        type: String,
-        enum : ['ENGLISH','CHINESE', 'FRENCH', 'AFRICANS', 'DUTCH'],
-    },
+    languages: [String],
     badges: [BadgesSchema],
     achievements: [AchievementSchema],
     qualifications: [QualificationSchema],

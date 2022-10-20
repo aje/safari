@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import PageTitle from "../components/PageTitle";
+import PageTitle from "../../components/PageTitle";
 import {Button, Image, Input, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
-import axios from "../services/api"
+import axios from "../../services/api"
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {toast} from "react-hot-toast";
-import {uploadFile} from "../services/clientUtils";
+import {uploadFile} from "../../services/clientUtils";
 import {Upload} from "@styled-icons/entypo/Upload";
 
 const UploadQualification = () => {
@@ -19,11 +19,6 @@ const UploadQualification = () => {
         image: null,
         // user: session?.user?._id
     });
-
-    useEffect(()=>{
-        if(session)
-            onChange("user")(session?.user?._id)
-    }, [session]);
 
     const onChange = name => event => {
         setFormData( {...formData, [name]: event?.target ? event.target.value: event });
@@ -54,7 +49,7 @@ const UploadQualification = () => {
                 className={"border border-dashed border-2 border-gray-400 rounded"}
                 src={"/uploads/" + formData.image.filename}
                 layout="fill"
-                objectFit="cover" /> : <Button bordered size={"xl"} className={"border border-dashed border-2 border-gray-400 text-gray-400"} htmlFor={"upload"} as={"label"} icon={<Upload size={16}/>}>
+                objectFit="cover" /> : <Button bordered size={"xl"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<Upload size={16}/>}>
                 <input type="file" className={"hidden"} name="qualifications" multiple={true} id={"upload"}
                        onChange={onUploadPic}
                 />
