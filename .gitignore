@@ -29,3 +29,4 @@ yarn-error.log*
 .env.production.local
 package-lock.json
 .idea
+/public/uploads/
