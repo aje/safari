@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {toast} from "react-hot-toast";
 
 // export const baseURL = 'http://virtserver.swaggerhub.com/behroozina/SPSDriver/1.0.0';
 // export const baseURL = 'http://127.0.0.1:3000/api';
@@ -28,6 +29,7 @@ instance.interceptors.response.use(
     function (response) {
         return response;
     }, function (error) {
+        toast.error(error.message);
         if(error.response) {
              if( error.response.status === 400) {
              }
@@ -35,6 +37,7 @@ instance.interceptors.response.use(
              }
             if(error.response.status === 441) {
             } else {
+
             }
         }
     return Promise.reject(error);

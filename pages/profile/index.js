@@ -20,7 +20,7 @@ import Reviews from "../../components/guide/Reviews";
 
 export default function Profile({driver}) {
     const { data: session } = useSession();
-    // console.log(driver);
+    console.log(driver);
 
     const {qualifications, badges,  travelers, achievements, xp} = driver || {};
 

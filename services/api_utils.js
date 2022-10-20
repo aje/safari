@@ -7,3 +7,4 @@ export  const  getTrips = async () => {
     return Post.find({})
         .populate({ path: 'user', model: User});
 };
+

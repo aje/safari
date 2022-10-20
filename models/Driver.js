@@ -3,7 +3,7 @@ import {UserSchema} from "./User";
 
 const QualificationSchema = new Schema({
     title: String,
-    picture: String
+    image: {}
 });
 const BadgesSchema = new Schema({
     title: String,
