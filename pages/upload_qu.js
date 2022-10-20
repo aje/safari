@@ -32,8 +32,8 @@ const UploadQualification = () => {
     const onSubmit = () => {
         setLoading(true);
         axios.post(`/qualification`, formData).then(()=>{
-            toast.success("Successfully created!");
-
+            router.push("/profile");
+            toast.success("Qualification successfully uploaded!");
         }).finally(() => setLoading(false))
     };
 

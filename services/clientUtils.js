@@ -22,7 +22,7 @@ export const uploadFile = async (event) => {
     if(up.status !== 200) {
         toast.error("Something is wrong");
     } else {
-        toast.success("Uploaded!")
+        toast.success("File uploaded!")
     }
     return up;
 };

@@ -41,8 +41,11 @@ const Qualifications = ({data}) => {
 
     return (
         <Card className={"my-5"}>
-            <Card.Header>
+            <Card.Header className={"justify-between"}>
                 <Text b>Qualifications ({data.length})</Text>
+                <Button size={"xs"} bordered color={"success"} auto icon={ <Upload size={16}/>} onPress={()=>router.push("/upload_qu")}>
+                    Upload
+                </Button>
             </Card.Header>
             <div className={"mx-3"}>
                 {/*<img src={createObjectURL} />*/}
