@@ -5,7 +5,6 @@ import PageTitle from "../components/PageTitle";
 import Image from "next/image";
 import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
 import {ArrowUpS} from "@styled-icons/remix-line/ArrowUpS";
-import Link from "next/link";
 import ListItem from "../components/trip/ListItem";
 import Empty from "../components/Empty";
 import {getTrips} from "../services/api_utils";

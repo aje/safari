@@ -18,6 +18,8 @@ import {useRouter} from "next/router";
 import MyRating from "../../components/MyRating";
 import Reviews from "../../components/guide/Reviews";
 
+import {DotsThreeVertical} from "@styled-icons/entypo/DotsThreeVertical";
+
 export default function Profile({driver}) {
     const { data: session } = useSession();
 
@@ -71,7 +73,7 @@ export default function Profile({driver}) {
                 <div className={"flex"}>
                     {/*<Button size={'xs'} icon={<Edit size={16} color={"gray"}/>} light auto></Button>*/}
                     <Dropdown>
-                        <Dropdown.Trigger><Button className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0'} light auto><MoreVert size={20}/></Button></Dropdown.Trigger>
+                        <Dropdown.Trigger><Button className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0'} light auto><DotsThreeVertical size={20}/></Button></Dropdown.Trigger>
                         <Dropdown.Menu  onAction={onMoreMenu} aria-label="Static Actions">
                             <Dropdown.Item key="upload">Upload qualifications</Dropdown.Item>
                             <Dropdown.Item key="edit">Edit profile</Dropdown.Item>

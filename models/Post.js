@@ -17,7 +17,7 @@ export const PostSchema = new Schema({
         type: Date,
         default: new Date(),
     },
-    gallery: [String],
+    gallery: [],
     ratingsQuantity: Number,
     ratingsAverage: Number,
     travelers: [{

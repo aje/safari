@@ -1,9 +1,12 @@
 import Post from "../../models/Post";
 import dbConnect from "../../services/dbconnect";
 import User from "../../models/User";
+import {unstable_getServerSession} from "next-auth/next";
+import {authOptions} from "./auth/[...nextauth]";
 
 export default async function handler(req, res) {
     const { method } = req;
+    const session = await unstable_getServerSession(req, res, authOptions)
 
     await dbConnect();
 
@@ -20,7 +23,7 @@ export default async function handler(req, res) {
             break;
         case 'POST':
             try {
-                const data = await Post.create(req.body);
+                const data = await Post.create({...req.body, user: session.user });
                 res.status(201).json({ success: true, data: data });
             } catch (error) {
                 res.status(400).json({ success: false });

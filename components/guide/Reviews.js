@@ -5,11 +5,11 @@ import Empty from "../Empty";
 const Reviews = ({data, total}) => {
     return (<Card className={"my-5"}>
         <Card.Header>
-            <Text b>Reviews ({total})</Text>
+            <Text b>Reviews {total && `(${total})`}</Text>
         </Card.Header>
 
         <div className={"px-3"}>
-            {total === 0 ? <Empty  /> :
+            {!total ? <Empty  /> :
             data?.map((item ,i) => <ReviewItem  key={i} item={item}/>)}
         </div>
     </Card>);

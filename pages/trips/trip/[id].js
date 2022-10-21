@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
-import {Button, Card, Text, User} from "@nextui-org/react"
+import {Button, Card, Dropdown, Text, User} from "@nextui-org/react"
 import Moment from "react-moment";
 import MyRating from "../../../components/MyRating";
 import Reviews from "../../../components/guide/Reviews";
@@ -11,12 +11,25 @@ import dbConnect from "../../../services/dbconnect";
 import * as models from "../../../models/models";
 import {monthFormat} from "../../../variables";
 import Empty from "../../../components/Empty";
+import {DotsThreeVertical} from "@styled-icons/entypo/DotsThreeVertical";
+import {signOut} from "next-auth/react";
 
 const  Trip = ({item}) => {
     const [selectedImage, setSelectedImage] = useState(0);
 
     const router = useRouter();
 
+    const onMoreMenu = (key) => {
+        switch (key) {
+            case "edit":
+                router.push("/profile/edit")
+                break;
+            case "delete":
+                break;
+            default:
+
+        }
+    };
     // console.log(item);
     // const { id } = router.query;
     return (<div className={"pt-2 px-4 pb-28"}>
@@ -36,13 +49,27 @@ const  Trip = ({item}) => {
                           count={item.ratingsQuantity}
                 />
             </Card>
+            <Dropdown>
+                <Dropdown.Trigger>
+                    <Button className={'text-gray-500 ml-2 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0'} light auto><DotsThreeVertical size={20}/></Button></Dropdown.Trigger>
+                <Dropdown.Menu  onAction={onMoreMenu} aria-label="Static Actions">
+                    <Dropdown.Item key="upload">Edit</Dropdown.Item>
+                    <Dropdown.Item key="logout" color="error">
+                        Delete
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
         </div>
         {item.gallery.length === 0 ? <Card   className="my-4"><Empty label="No gallery! Please add pictures to publish"/></Card> :
             <>
         <Card  variant="flat" className="my-3">
 
             <Card.Image
-                src={item.gallery[selectedImage]}
+                // height={350}
+                showSkeleton
+                width={"100%"}
+                src={"/uploads/" + item.gallery?.[selectedImage].filename}
                 objectFit="cover"
             />
         </Card>
@@ -51,7 +78,7 @@ const  Trip = ({item}) => {
                 <Card isPressable onClick={()=> setSelectedImage(i)} key={i} variant={"flat"}  className={"w-auto mr-3 flex-shrink-0"}>
                     <Card.Body css={{ p: 0 }}>
                         <Card.Image
-                            src={image}
+                            src={"/uploads/" + image.filename}
                             objectFit="cover"
                             width={100}
                             height={100}

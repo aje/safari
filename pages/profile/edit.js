@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PageTitle from "../../components/PageTitle";
-import {Button, Checkbox, Image, Input, Loading, Textarea} from "@nextui-org/react";
+import {Button, Checkbox, Input, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "../../services/api"
 import {useSession} from "next-auth/react";

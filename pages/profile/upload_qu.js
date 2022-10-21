@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import PageTitle from "../../components/PageTitle";
-import {Button, Image, Input, Loading, Textarea} from "@nextui-org/react";
+import {Button, Image, Input, Loading} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "../../services/api"
 import {useSession} from "next-auth/react";
@@ -49,7 +49,7 @@ const UploadQualification = () => {
                 className={"border border-dashed border-2 border-gray-400 rounded"}
                 src={"/uploads/" + formData.image.filename}
                 layout="fill"
-                objectFit="cover" /> : <Button bordered size={"xl"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<Upload size={16}/>}>
+                objectFit="cover" /> : <Button bordered size={"xl"} as={"label"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<Upload size={16}/>}>
                 <input type="file" className={"hidden"} name="qualifications" multiple={true} id={"upload"}
                        onChange={onUploadPic}
                 />

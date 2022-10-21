@@ -14,9 +14,10 @@ const ListItem = ({item}) => {
 
             {item.gallery.length === 0 ? <><Empty label="No gallery! Please add pictures to publish"/><hr /></> :
             <Card.Image
-                height={400}
+                height={350}
                 showSkeleton
-                src={item.gallery[selectedImage]}
+                width={"100%"}
+                src={"/uploads/" + item.gallery?.[selectedImage].filename}
                 objectFit="cover"
             />}
 

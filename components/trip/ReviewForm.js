@@ -46,7 +46,7 @@ const ReviewForm = ({post}) => {
                 value={formData.rating}
                 onChange={onChange("rating")}
             />
-            <Button auto disabled={loading || formData.description === "" || formData.rating === 0} onPress={onSubmit}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
+            <Button  disabled={loading || formData.description === "" || formData.rating === 0} onPress={onSubmit}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
                 {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
                     "Post" }
             </Button>
