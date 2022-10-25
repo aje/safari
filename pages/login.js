@@ -1,12 +1,19 @@
 import {getProviders, getSession, signIn} from "next-auth/react"
-import React from "react";
-import {Button, Input, Text} from "@nextui-org/react";
+import React, {useState} from "react";
+import {Button, Input, Loading, Text} from "@nextui-org/react";
 import {Github} from "@styled-icons/entypo-social/Github";
 import PageTitle from "../components/PageTitle";
 import Link from "next/link";
 
-export default function SignIn({ providers }) {
-    console.log(providers);
+export default function Login({ providers }) {
+    // console.log(providers);
+    const [loading, setLoading] = useState(false);
+
+    const onSignin = (p) => () => {
+        setLoading(true)
+        signIn(p)
+    }
+
     return (
         <>
             <PageTitle title={"Login"}/>
@@ -19,9 +26,9 @@ export default function SignIn({ providers }) {
 
                 <Text h6 className={"mb-5 text-center text-gray-700 font-normal"}>Or continue with social</Text>
                 {/*{Object.values(providers).map((provider) => (*/}
-                    <Button className={"mb-4"} size={"lg"} icon={<Github size={30} />} bordered onClick={() => signIn('github')}>
-                        Sign in with Github
-                    </Button>
+                <Button disabled={loading} className={"mb-4"} size={"lg"} icon={<Github size={30} />} bordered onClick={onSignin('github')}>
+                    {loading ? <Loading  type="points-opacity" color="currentColor" size="sm" /> : "Sign in with Github"}
+                </Button>
                 {/*))}*/}
                 
 
@@ -37,8 +44,7 @@ export default function SignIn({ providers }) {
     )
 }
 
-export async function getServerSideProps(context) {
-    const { req } = context;
+export async function getServerSideProps({ req }) {
     const session = await getSession({ req });
     if (session) {
         return {

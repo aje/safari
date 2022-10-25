@@ -12,7 +12,7 @@ import {Upload} from "@styled-icons/entypo/Upload";
 const UploadQualification = () => {
     const { data: session } = useSession();
     const router = useRouter();
-    // console.log(session);
+    const isFirstUser = router.query?.firstUser === "true";
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: "",
@@ -41,7 +41,7 @@ const UploadQualification = () => {
     const disabled = formData.title === "" || !formData.image;
 
     return (<>
-        <PageTitle withBackButton title={"UPLOAD QU"}/>
+        <PageTitle withBackButton={!isFirstUser} title={"UPLOAD QU"}/>
         <div className={"flex relative flex-col z-10 p-8"} >
             <Input value={formData.title} onChange={onChange("title")} required size={"lg"} bordered className={"mb-5"} label={"Title *"} placeholder={"Choose a good title"}/>
             {formData.image ? <Image
@@ -55,10 +55,15 @@ const UploadQualification = () => {
                 />
                 Upload Image
             </Button>}
-           <div><Button  disabled={loading || disabled} onPress={onSubmit} className={"mb-10 mt-10"} size={'lg'} iconRight={!loading && <KeyboardArrowRight size={20}/>}>
+           <div className={"flex  my-10 justify-between items-center"}>
+
+               {isFirstUser && <Button onPress={()=>router.push("/profile")} auto light>Skip</Button>}
+
+               <Button  disabled={loading || disabled} onPress={onSubmit}  size={'lg'} iconRight={!loading && <KeyboardArrowRight size={20}/>}>
                 {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
                     "Publish" }
-            </Button></div>
+            </Button>
+           </div>
         </div>
     </>);
 };

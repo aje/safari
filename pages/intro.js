@@ -50,7 +50,7 @@ const Intro = () => {
         if(step < slides.length -1) {
             setStep( step+1)
         } else {
-            router.push('/signin')
+            router.push('/login')
         }
     };
     return (<>
@@ -68,11 +68,11 @@ const Intro = () => {
             {slides.map((item, i) => i === step &&
                 <SplashScreenCard key={i} slides={slides} changeStep={onChangeStep} {...item} />)}
             <div className="flex items-center w-full justify-between p-3">
-                <Button as={Link} href={"/"} rounded light auto>Skip</Button>
+                <Button as={Link} href={"/login"} rounded light auto>Skip</Button>
                 <div className="flex items-center">
                     {slides.map((item, i) => <Button auto onPress={()=>setStep(i)} key={i} className={clsx("w-2 h-2 bg-primary/20 mx-2 rounded-full", step === i && "bg-primary/100" )}/>)}
                 </div>
-                <Button color={"primary"} auto rounded onPress={onChangeStep}>{step === slides.length -1 ? "SignIn" :  "Next"}</Button>
+                <Button color={"primary"} auto rounded onPress={onChangeStep}>{step === slides.length -1 ? "Signin" :  "Next"}</Button>
             </div>
         </div>
         </>

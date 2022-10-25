@@ -1,8 +1,7 @@
 import nextConnect from "next-connect";
 import dbConnect from "../../services/dbconnect";
-import {unstable_getServerSession} from "next-auth/next";
-import {authOptions} from "./auth/[...nextauth]";
 import Driver from "../../models/Driver";
+import {getSession} from "next-auth/react";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -14,7 +13,7 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.put(async (req, res) => {
-    const session = await unstable_getServerSession(req, res, authOptions)
+    const session = await getSession({ req });
     if (session) {
         // Signed in
         await dbConnect();
@@ -34,6 +33,17 @@ apiRoute.put(async (req, res) => {
     res.end()
     // res.status(200).json({data: "success"});
     // console.log("apiRoute.post");
-});
+}).post(async (req, res) => {
+    const session = await getSession({ req });
+    // const session = await unstable_getServerSession(req, res, authOptions)
+    if (session) {
+        await dbConnect();
+        const d = await Driver.create({...res.body, user: session.user});
+        res.status(200).json({data: d});
+    } else {
+        res.status(401)
+    }
+    res.end()
+})
 
 export default apiRoute;

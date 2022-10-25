@@ -3,11 +3,11 @@ import PageTitle from "../../components/PageTitle";
 import {Button, Checkbox, Input, Loading, Textarea} from "@nextui-org/react";
 import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRight";
 import axios from "../../services/api"
-import {useSession} from "next-auth/react";
+import {getSession, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {toast} from "react-hot-toast";
-import {unstable_getServerSession} from "next-auth/next";
-import {authOptions} from "../api/auth/[...nextauth]";
+// import {unstable_getServerSession} from "next-auth/next";
+// import {authOptions} from "../api/auth/[...nextauth]";
 import * as models from "../../models/models";
 import moment from "moment";
 
@@ -25,23 +25,28 @@ const UploadQualification = ({driver}) => {
         birthday:'',
         yearOfStart: '',
     });
-    const [selected, setSelected] = React.useState(driver.languages);
+    const [selected, setSelected] = React.useState(driver ? driver.languages : []);
 
     const onChange = name => event => {
-        console.log(event);
         setFormData( {...formData, [name]: event?.target ? event.target.value: event });
     };
 
     const onSubmit = () => {
         setLoading(true);
-        axios.put(`/driver`, {...formData, languages: selected}).then(()=>{
-            router.push("/profile");
+        const req = driver ? axios.put(`/driver`, {...formData, languages: selected}) : axios.post(`/driver`, {...formData, languages: selected});
+        req.then(()=>{
+            if(driver)
+                router.push("/profile")
+            else {
+                router.push("/profile/upload_qu?firstUser=true");
+            }
+
             toast.success("Info successfully updated!");
         }).finally(() => setLoading(false))
     };
 
     return (<>
-        <PageTitle withBackButton title={"UPLOAD QU"}/>
+        <PageTitle withBackButton={driver} title={"Edit "}/>
         <div className={"flex relative flex-col z-10 p-8"} >
             <Textarea value={formData.bio} onChange={onChange("bio")} required  rows={4} size={"lg"} bordered className={"mb-5"} label={"bio *"} placeholder={"Describe yourself in couple sentences"} />
             <Input required value={formData.birthday} onChange={onChange("birthday")} size={"lg"} bordered className={"mb-5"} label={"Year of your birth is enough"} type="month"/>
@@ -71,8 +76,9 @@ const UploadQualification = ({driver}) => {
 
 export default UploadQualification;
 
-export async function getServerSideProps(context) {
-    const session = await unstable_getServerSession(context.req, context.res, authOptions);
+export async function getServerSideProps({ req }) {
+    const session = await getSession({ req });
+    // const session = await unstable_getServerSession(context.req, context.res, authOptions);
     let driver = null;
     try {
         driver = await models.Driver.findOne({user: {_id: session?.user._id}})

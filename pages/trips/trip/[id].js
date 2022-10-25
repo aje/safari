@@ -12,26 +12,26 @@ import * as models from "../../../models/models";
 import {monthFormat} from "../../../variables";
 import Empty from "../../../components/Empty";
 import {DotsThreeVertical} from "@styled-icons/entypo/DotsThreeVertical";
-import {signOut} from "next-auth/react";
+import {useSession} from "next-auth/react";
 
 const  Trip = ({item}) => {
     const [selectedImage, setSelectedImage] = useState(0);
+    const {data: session} = useSession();
 
     const router = useRouter();
 
     const onMoreMenu = (key) => {
         switch (key) {
             case "edit":
-                router.push("/profile/edit")
+                router.push(`/upload?edit=${item._id}`)
                 break;
             case "delete":
                 break;
             default:
-
         }
     };
-    // console.log(item);
-    // const { id } = router.query;
+
+    const owner = session?.user?._id === item.user?._id;
     return (<div className={"pt-2 px-4 pb-28"}>
         <div className="flex items-center justify-between">
             <Button  onClick={() => router.back()} className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0 -ml-2 mr-1'} light auto><ArrowBack size={26}/></Button>
@@ -49,17 +49,20 @@ const  Trip = ({item}) => {
                           count={item.ratingsQuantity}
                 />
             </Card>
-            <Dropdown>
-                <Dropdown.Trigger>
-                    <Button className={'text-gray-500 ml-2 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0'} light auto><DotsThreeVertical size={20}/></Button></Dropdown.Trigger>
-                <Dropdown.Menu  onAction={onMoreMenu} aria-label="Static Actions">
-                    <Dropdown.Item key="upload">Edit</Dropdown.Item>
-                    <Dropdown.Item key="logout" color="error">
-                        Delete
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
+            {owner &&
+                <Dropdown>
+                    <Dropdown.Trigger>
+                        <Button
+                            className={'text-gray-500 ml-2 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0'}
+                            light auto><DotsThreeVertical size={20}/></Button></Dropdown.Trigger>
+                    <Dropdown.Menu onAction={onMoreMenu} aria-label="Static Actions">
+                        <Dropdown.Item key="edit">Edit</Dropdown.Item>
+                        <Dropdown.Item key="logout" color="error">
+                            Delete
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            }
         </div>
         {item.gallery.length === 0 ? <Card   className="my-4"><Empty label="No gallery! Please add pictures to publish"/></Card> :
             <>

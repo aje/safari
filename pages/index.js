@@ -1,4 +1,4 @@
-import {signOut, useSession} from "next-auth/react";
+import {getSession, signOut, useSession} from "next-auth/react";
 import React, {useState} from "react"
 import {Button, Text, useTheme} from "@nextui-org/react";
 import PageTitle from "../components/PageTitle";
@@ -91,7 +91,7 @@ export default function Home({trips}) {
                     {!!trips && trips.map((item, i) =>  <ListItem key={i} item={item} />)}
                 </div>
         
-                <Button onPress={()=> signOut({ callbackUrl: '/signin' })}>Sign out</Button>
+                <Button onPress={()=> signOut({ callbackUrl: '/login' })}>Sign out</Button>
                     {/*<h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>*/}
                     {/*<Caravan size={20}/>*/}
                     {/*<h1 className="text-5xl ">*/}
@@ -115,7 +115,15 @@ export default function Home({trips}) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req}) {
+
+    const session = await getSession({ req });
+    if (!session) {
+        return {
+            redirect: { destination: "/intro" },
+        };
+    }
+
     const trips = await getTrips();
     return {
         props: { trips : JSON.parse(JSON.stringify(trips))},

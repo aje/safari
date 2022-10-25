@@ -17,7 +17,7 @@ const About = () => {
                 -
                 <Link href={"/signin"}>Login</Link>
             </div>
-            {/*<NextLink href="/signin"><Link className={"mt-5"} color={"secondary"}>Login</Link></NextLink>*/}
+            {/*<NextLink href="/signin"><Link className={"mt-5"} color={"secondary"}>Signin</Link></NextLink>*/}
             {/*<NextLink href="/"><Link className={"mt-5"} color={"secondary"}>Go Back Home</Link></NextLink>*/}
         </div>
     </>);

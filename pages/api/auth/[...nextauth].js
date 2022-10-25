@@ -6,8 +6,14 @@ import dbConnect from "../../../services/dbconnect";
 import User from "../../../models/User"
 import Driver from "../../../models/Driver";
 
-export const authOptions ={
-    // Configure one or more authentication providers
+export const authOptions = {
+    pages: {
+        signIn: '/login',
+        // signOut: '/auth/signout',
+        // error: '/auth/error', // Error code passed in query string as ?error=
+        // verifyRequest: '/auth/verify-request', // (used for check email message)
+        newUser: '/profile/edit?firstUser=true' // New users will be directed here on first sign in (leave the property out if not of interest)
+    },
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_ID,
@@ -16,9 +22,18 @@ export const authOptions ={
 
         // ...add more providers here
     ],
+    secret: process.env.JWT_SECRET,
     adapter: MongoDBAdapter(clientPromise),
-
     callbacks: {
+        // async jwt({ token, account, user }) {
+        //     // initial signin
+        //     if (account && user) {
+        //         return {
+        //             ...token,
+        //         };
+        //     }
+        //         return token;
+        // },
         async signIn({ user, account, profile, email, credentials }) {
             // console.log(user.id);
             await dbConnect();
@@ -29,7 +44,7 @@ export const authOptions ={
                     // todo check the driverFromDB.lastSignIn and if it's the same day don't update the xp
                     driverFromDB.xp  += 100;
                     driverFromDB.save();
-                    const driver  = new Driver({user: user.id, xp: 100});
+                    // const driver  = new Driver({user: user.id, xp: 100});
                 } else {
                     const driver  = new Driver({user: user.id, xp: 100});
                     driver.save();

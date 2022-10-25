@@ -1,8 +1,8 @@
-import {signOut, useSession} from "next-auth/react";
+import {getSession, signOut, useSession} from "next-auth/react";
 import {Avatar, Badge, Button, Card, Dropdown, Navbar, Text} from "@nextui-org/react";
 import {Verified} from "@styled-icons/material-rounded/Verified"
 import {Tab} from '@headlessui/react'
-import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
+// import {MoreVert} from "@styled-icons/material-rounded/MoreVert";
 import LoadingPage from "../../components/LoadingPage";
 import Travelers from "../../components/guide/Travelers";
 import Qualifications from "../../components/guide/Qualifications";
@@ -11,8 +11,8 @@ import Level from "../../components/guide/Level";
 import Badges from "../../components/guide/Badges";
 import React, {useEffect, useState} from "react";
 import Achievements from "../../components/guide/Achievements";
-import {authOptions} from '../api/auth/[...nextauth]';
-import {unstable_getServerSession} from "next-auth/next"
+// import {authOptions} from '../api/auth/[...nextauth]';
+// import {unstable_getServerSession} from "next-auth/next"
 import * as models from "../../models/models";
 import {useRouter} from "next/router";
 import MyRating from "../../components/MyRating";
@@ -37,18 +37,18 @@ export default function Profile({driver}) {
                 router.push("/profile/edit")
                 break;
             case "logout":
-                signOut({ callbackUrl: '/signin' });
+                signOut({ callbackUrl: '/login' });
                 break;
             default:
 
         }
     };
     const router = useRouter();
-    useEffect(()=>{
-        if(!driver) {
-            router.push("/")
-        }
-    }, [driver]);
+    // useEffect(()=>{
+    //     if(!driver) {
+    //         router.push("/")
+    //     }
+    // }, [driver]);
 
     if(!session || !driver) return <LoadingPage />;
 
@@ -115,8 +115,10 @@ export default function Profile({driver}) {
     )
 }
 
-export async function getServerSideProps(context) {
-    const session = await unstable_getServerSession(context.req, context.res, authOptions);
+export async function getServerSideProps({ req }) {
+    // const session = await unstable_getServerSession(context.req, context.res, authOptions);
+
+    const session = await getSession({ req });
     let driver = null;
     try {
         driver = await models.Driver.findOne({user: {_id: session?.user._id}})

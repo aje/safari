@@ -3,7 +3,7 @@ import {toast} from "react-hot-toast";
 
 export const uploadFile = async (event) => {
     if (!event.target.files?.length) {
-        return;
+        return ;
     }
 
     const formData = new FormData();
