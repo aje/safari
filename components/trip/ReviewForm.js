@@ -6,6 +6,7 @@ import MyRating from "../MyRating";
 import {toast} from "react-hot-toast";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {Login} from "@styled-icons/entypo";
 
 const ReviewForm = ({post}) => {
     const { data: session } = useSession();
@@ -35,21 +36,25 @@ const ReviewForm = ({post}) => {
     };
 
     return (<Card className={"mt-5 px-4 py-3"}>
-        {/*<Card.Header><Text h6>Review</Text></Card.Header>*/}
-
-        <Textarea required onChange={onChange("description")} value={formData.description}  rows={4} size={"lg"} bordered className={"mb-4"} label={"Review"} placeholder={"You can only review if you have been in this trip"} />
-
-        <div className="">
+        <Textarea required disabled={!session} onChange={onChange("description")} value={formData.description}  rows={4} size={"lg"} bordered className={"mb-4"} label={"Review"} placeholder={"You can only review if you have been in this trip"} />
+        <div>
             <MyRating
-                className={"mb-4 "}
+                readonly={!session}
+                className={"mb-4"}
                 lg
                 value={formData.rating}
                 onChange={onChange("rating")}
             />
-            <Button  disabled={loading || formData.description === "" || formData.rating === 0} onPress={onSubmit}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
-                {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
-                    "Post" }
-            </Button>
+
+            {session ?
+                <Button disabled={loading || formData.description === "" || formData.rating === 0} onPress={onSubmit}
+                        iconRight={!loading && <KeyboardArrowRight size={20}/>}>
+                    {loading ? <Loading type="points-opacity" color="currentColor" size="sm"/> :
+                        "Post"}
+                </Button>
+                :
+                <Button color={"secondary"} onPress={()=>router.push('/login')} icon={<Login size={24} />}>Login first</Button>
+            }
         </div>
     </Card>);
 };

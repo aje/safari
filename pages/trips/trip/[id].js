@@ -55,8 +55,8 @@ const  Trip = ({item}) => {
         img.src = "data:image/svg+xml;base64," + btoa(svgData);
     };
 
-    const owner = session?.user?._id === item.user?._id;
-    return (<div className={"pt-2 px-4 pb-28"}>
+    const owner = session ? session.user?._id === item?.user?._id : false;
+    return (!item ? <Empty label={"Not found"}/> : <div className={"pt-2 px-4 pb-28"}>
         <div className="flex items-center justify-between">
             <Button  onClick={() => router.back()} className={'text-gray-500 hover:bg-primary hover:text-white rounded-full h-10 w-10 p-0 -ml-2 mr-1'} light auto><ArrowBack size={26}/></Button>
             <div className="flex-grow">
@@ -140,20 +140,20 @@ const  Trip = ({item}) => {
             <Card.Body className={"pt-0"}>
                 {item.travelers?.length > 0 ? "Show " : <Empty />}
             </Card.Body>
-            <Divider />
+            {owner && <><Divider />
             <Card.Body className={" bg-gray-50 "}>
-                {owner && <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
                     <Text h5>Share to invite travelers</Text>
                     <QRCode id="qrcode" value={window.location.href + "?invite=true"}/>
                     <Button  className={"mt-5"} onPress={downloadQR} auto color={"primary"} light icon={<Download2 size={20}/>}>Save QR Code</Button>
-                </div>}
+                </div>
             </Card.Body>
-
+            </>}
         </Card>
 
 
 
-        {!owner && <ReviewForm post={item}/>}
+        {(!owner ) && <ReviewForm post={item}/>}
         <Reviews data={item.reviews} total={item.ratingsQuantity}/>
 
     </div>);
