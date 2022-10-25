@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
-import {Button, Card, Dropdown, Text, User} from "@nextui-org/react"
+import {Button, Card, Divider, Dropdown, Text, User} from "@nextui-org/react"
 import Moment from "react-moment";
 import MyRating from "../../../components/MyRating";
 import Reviews from "../../../components/guide/Reviews";
@@ -13,12 +13,15 @@ import {monthFormat} from "../../../variables";
 import Empty from "../../../components/Empty";
 import {DotsThreeVertical} from "@styled-icons/entypo/DotsThreeVertical";
 import {useSession} from "next-auth/react";
+import QRCode from "react-qr-code";
+import {Download2} from "@styled-icons/remix-line/Download2";
 
 const  Trip = ({item}) => {
     const [selectedImage, setSelectedImage] = useState(0);
     const {data: session} = useSession();
 
     const router = useRouter();
+
 
     const onMoreMenu = (key) => {
         switch (key) {
@@ -29,6 +32,27 @@ const  Trip = ({item}) => {
                 break;
             default:
         }
+    };
+
+    const downloadQR = () => {
+        const svg = document.getElementById("qrcode");
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+        img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const pngFile = canvas.toDataURL("image/png");
+
+            const downloadLink = document.createElement("a");
+            downloadLink.download = "qrcode";
+            downloadLink.href = `${pngFile}`;
+            downloadLink.click();
+        };
+
+        img.src = "data:image/svg+xml;base64," + btoa(svgData);
     };
 
     const owner = session?.user?._id === item.user?._id;
@@ -111,8 +135,25 @@ const  Trip = ({item}) => {
             <Card.Header><Text h6>{item.title}</Text></Card.Header>
             <Card.Body className={"pt-0"}>{item.description}</Card.Body>
         </Card>
+        <Card className={"mt-5"}>
+            <Card.Header><Text h6>Travellers</Text></Card.Header>
+            <Card.Body className={"pt-0"}>
+                {item.travelers?.length > 0 ? "Show " : <Empty />}
+            </Card.Body>
+            <Divider />
+            <Card.Body className={" bg-gray-50 "}>
+                {owner && <div className="flex flex-col items-center">
+                    <Text h5>Share to invite travelers</Text>
+                    <QRCode id="qrcode" value={window.location.href + "?invite=true"}/>
+                    <Button  className={"mt-5"} onPress={downloadQR} auto color={"primary"} light icon={<Download2 size={20}/>}>Save QR Code</Button>
+                </div>}
+            </Card.Body>
 
-        <ReviewForm post={item}/>
+        </Card>
+
+
+
+        {!owner && <ReviewForm post={item}/>}
         <Reviews data={item.reviews} total={item.ratingsQuantity}/>
 
     </div>);

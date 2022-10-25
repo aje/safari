@@ -1,6 +1,6 @@
 import {getSession, signOut, useSession} from "next-auth/react";
 import React, {useState} from "react"
-import {Button, Text, useTheme} from "@nextui-org/react";
+import {Button, Card, Text, useTheme} from "@nextui-org/react";
 import PageTitle from "../components/PageTitle";
 import Image from "next/image";
 import {ImageAdd} from "@styled-icons/remix-line/ImageAdd";
@@ -87,11 +87,11 @@ export default function Home({trips}) {
         
                 <div className="mt-8">
                     <Text h4>Trips</Text>
-                    {trips?.length === 0 && <Empty/>}
+                    {trips?.length === 0 && <Card><Empty/></Card>}
                     {!!trips && trips.map((item, i) =>  <ListItem key={i} item={item} />)}
                 </div>
         
-                <Button onPress={()=> signOut({ callbackUrl: '/login' })}>Sign out</Button>
+                {/*<Button color={"error"} light  onPress={()=> signOut({ callbackUrl: '/login' })}>Sign out</Button>*/}
                     {/*<h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>*/}
                     {/*<Caravan size={20}/>*/}
                     {/*<h1 className="text-5xl ">*/}
