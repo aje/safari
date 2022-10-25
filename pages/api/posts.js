@@ -19,7 +19,7 @@ const apiRoute = nextConnect({
 apiRoute.put(async (req, res) => {
     await dbConnect();
     const session = await unstable_getServerSession(req, res, authOptions)
-    console.log(req.body);
+    // console.log(req.body);
         const update = {
             title: req.body.title,
             description:  req.body.description,

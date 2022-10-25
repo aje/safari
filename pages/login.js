@@ -4,6 +4,7 @@ import {Button, Input, Loading, Text} from "@nextui-org/react";
 import {Github} from "@styled-icons/entypo-social/Github";
 import PageTitle from "../components/PageTitle";
 import Link from "next/link";
+import {Google} from "@styled-icons/remix-line";
 
 export default function Login({ providers }) {
     // console.log(providers);
@@ -26,8 +27,11 @@ export default function Login({ providers }) {
 
                 <Text h6 className={"mb-5 text-center text-gray-700 font-normal"}>Or continue with social</Text>
                 {/*{Object.values(providers).map((provider) => (*/}
-                <Button disabled={loading} className={"mb-4"} size={"lg"} icon={<Github size={30} />} bordered onClick={onSignin('github')}>
-                    {loading ? <Loading  type="points-opacity" color="currentColor" size="sm" /> : "Sign in with Github"}
+                <Button disabled={loading} className={"mb-4 bg-white border-1 shadow-2xl active:shadow borders-solid border-blue-500 text-blue-500"} size={"lg"} icon={<Google size={30} />} color={"inherit"} onClick={onSignin('google')}>
+                    {loading ? <Loading  type="points-opacity" color="currentColor" size="sm" /> : <>Sign in with&nbsp; <strong>Google</strong></>}
+                </Button>
+                <Button disabled={loading}  className={"mb-4 bg-white border-1 shadow-2xl active:shadow borders-solid border-gray-600 text-gray-600"} size={"lg"} icon={<Github size={30} />}  color={"black"} onClick={onSignin('github')}>
+                    {loading ? <Loading  type="points-opacity" color="currentColor" size="sm" /> : <>Sign in with&nbsp;<strong>Github</strong></>}
                 </Button>
                 {/*))}*/}
                 

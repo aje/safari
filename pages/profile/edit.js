@@ -14,7 +14,6 @@ import moment from "moment";
 const UploadQualification = ({driver}) => {
     const { data: session } = useSession();
     const router = useRouter();
-    console.log(driver);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState(driver ? {
         bio: driver?.bio,

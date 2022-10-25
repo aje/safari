@@ -38,8 +38,10 @@ apiRoute.put(async (req, res) => {
     // const session = await unstable_getServerSession(req, res, authOptions)
     if (session) {
         await dbConnect();
-        const d = await Driver.create({...res.body, user: session.user});
-        res.status(200).json({data: d});
+        const t = {...req.body, user: session.user};
+        console.log(t);
+        const data = await Driver.create(t);
+        res.status(200).json({data});
     } else {
         res.status(401)
     }
