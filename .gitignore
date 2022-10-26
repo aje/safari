@@ -26,8 +26,8 @@ yarn-error.log*
 # local env files
 .env.development.local
 .env.test.local
+.env.local
 .env.production.local
 package-lock.json
 .idea
 /public/uploads/
-.env.local
