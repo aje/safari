@@ -45,7 +45,7 @@ const Intro = () => {
     const [height, setHeight] = useState(0);
     useEffect(() => {
         setHeight(window.innerHeight);
-    });
+    }, []);
     const onChangeStep = () => {
         if(step < slides.length -1) {
             setStep( step+1)

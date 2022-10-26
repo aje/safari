@@ -5,6 +5,7 @@ import {unstable_getServerSession} from "next-auth/next";
 import {authOptions} from "./auth/[...nextauth]";
 import nextConnect from "next-connect";
 import moment from "moment";
+import {getSession} from "next-auth/react";
 // import Driver from "../../models/Driver";
 
 const apiRoute = nextConnect({
@@ -53,7 +54,7 @@ apiRoute.put(async (req, res) => {
     // console.log("apiRoute.post");
 }).post(async (req, res) => {
     await dbConnect();
-    const session = await unstable_getServerSession(req, res, authOptions)
+    const session = await getSession({ req });
     try {
         const data = await Post.create({...req.body, user: session.user});
         res.status(201).json({data: data});
@@ -62,6 +63,8 @@ apiRoute.put(async (req, res) => {
     }
 }).get(async (req, res) => {
     await dbConnect();
+
+    // const session = await getSession({ req });
     try {
         const posts = await Post.find({})
             .populate({path: 'user', model: User});

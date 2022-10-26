@@ -44,17 +44,17 @@ const UploadQualification = () => {
         <PageTitle withBackButton={!isFirstUser} title={"UPLOAD QU"}/>
         <div className={"flex relative flex-col z-10 p-8"} >
             <Input value={formData.title} onChange={onChange("title")} required size={"lg"} bordered className={"mb-5"} label={"Title *"} placeholder={"Choose a good title"}/>
-            {formData.image ? <Image
-                onClick={()=>onChange("image")(null)}
-                className={"border border-dashed border-2 border-gray-400 rounded"}
-                src={"/uploads/" + formData.image.filename}
-                layout="fill"
-                objectFit="cover" /> : <Button bordered size={"xl"} as={"label"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<Upload size={16}/>}>
-                <input type="file" className={"hidden"} name="qualifications" multiple={true} id={"upload"}
-                       onChange={onUploadPic}
-                />
-                Upload Image
-            </Button>}
+            {/*{formData.image ? <Image*/}
+            {/*    onClick={()=>onChange("image")(null)}*/}
+            {/*    className={"border border-dashed border-2 border-gray-400 rounded"}*/}
+            {/*    src={formData.image.originalUrl}*/}
+            {/*    layout="fill"*/}
+            {/*    objectFit="cover" /> : <Button bordered size={"xl"} as={"label"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<Upload size={16}/>}>*/}
+            {/*    <input type="file" className={"hidden"} name="qualifications" multiple={true} id={"upload"}*/}
+            {/*           onChange={onUploadPic}*/}
+            {/*    />*/}
+            {/*    Upload Image*/}
+            {/*</Button>}*/}
            <div className={"flex  my-10 justify-between items-center"}>
 
                {isFirstUser && <Button onPress={()=>router.push("/profile")} auto light>Skip</Button>}

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {toast} from "react-hot-toast";
 
-export const baseURL = 'https://safarica.click/api';
+// export const baseURL = "http://localhost:3000/api";
+export const baseURL = "http://safarica.click/api";
 export const headers = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
