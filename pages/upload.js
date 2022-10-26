@@ -5,13 +5,13 @@ import {KeyboardArrowRight} from "@styled-icons/material-rounded/KeyboardArrowRi
 import axios from "../services/api"
 import {useRouter} from "next/router";
 import {toast} from "react-hot-toast";
-import {Upload as UploadIcon} from "@styled-icons/entypo/Upload";
-import {uploadFile} from "../services/clientUtils";
 import moment from "moment";
 import dbConnect from "../services/dbconnect";
 import Post from "../models/Post";
 import * as models from "../models/models";
-import {DeleteBin2} from "@styled-icons/remix-line/DeleteBin2";
+import { Widget } from "@uploadcare/react-widget";
+import st from './upload.module.css';
+import clsx from "clsx";
 
 const Upload = ({item}) => {
     const router = useRouter();
@@ -30,7 +30,6 @@ const Upload = ({item}) => {
         gallery: []
     });
 
-
     const onChange = name => event => {
         setFormData( {...formData, [name]: event?.target ? event.target.value: event });
     };
@@ -44,18 +43,30 @@ const Upload = ({item}) => {
         }).finally(() => setLoading(false))
     };
 
-    const onUploadPic = async (e) => {
-        const res = await uploadFile(e);
-        const t = formData.gallery ;
-        if(res) onChange("gallery")([...res.data?.files, ...t])
-    }
+    // const onUploadPic = async (e) => {
+    //     const res = await uploadFile(e);
+    //     const t = formData.gallery ;
+    //     if(res) onChange("gallery")([...res.data?.files, ...t])
+    // }
 
     const disabled = formData.title === "" || formData.description === "" || formData.date === "";
 
-    const removeImage = (index) => e => {
-        const t = [...formData.gallery];
-        t.splice(index, 1);
-        onChange("gallery")(t)
+    // const removeImage = (index) => e => {
+    //     const t = [...formData.gallery];
+    //     t.splice(index, 1);
+    //     onChange("gallery")(t)
+    // }
+
+    const onFile = (e) => {
+        const files = e.files();
+        const gallery = []
+        files.forEach(f => {
+            f.done(s => {
+                gallery.push(s)
+            })
+        })
+
+        onChange("gallery")(gallery)
     }
 
     return (<>
@@ -66,29 +77,46 @@ const Upload = ({item}) => {
 
             <Input required value={formData.date} onChange={onChange("date")} size={"lg"} bordered className={"mb-5"} label={"Month of the trip *"} type="month"/>
 
-            {formData.gallery?.length > 0 &&
-                <div className=" mb-3">
-                    <Text  className={"mb-2"}>Uploaded Gallery ({formData.gallery.length})</Text>
-                    {formData.gallery.map((image, index) => <div key={index} className={"inline-block relative  mr-2 mb-1"}>
-                        <Image
-                            onClick={()=>onChange("image")(null)}
-                            className={" w-16 h-16 rounded"}
-                            src={"/uploads/" + image.filename}
-                            layout="fill"
-                            objectFit="cover" />
-                        <button onClick={removeImage(index)} className={"absolute text-white bottom-0 border-none active:bg-red-700/70 right-0 w-full h-full bg-red-700/30 rounded"}>
-                            <DeleteBin2 size={24} />
-                        </button>
-                    </div>) }
-                </div>
-                    }
+            {/*{formData.gallery?.length > 0 &&*/}
+            {/*    <div className=" mb-3">*/}
+            {/*        <Text  className={"mb-2"}>Uploaded Gallery ({formData.gallery.length})</Text>*/}
+            {/*        {formData.gallery.map((image, index) => <div key={index} className={"inline-block relative  mr-2 mb-1"}>*/}
+            {/*            <Image*/}
+            {/*                onClick={()=>onChange("image")(null)}*/}
+            {/*                className={" w-16 h-16 rounded"}*/}
+            {/*                src={"/uploads/" + image.filename}*/}
+            {/*                layout="fill"*/}
+            {/*                objectFit="cover" />*/}
+            {/*            <button onClick={removeImage(index)} className={"absolute text-white bottom-0 border-none active:bg-red-700/70 right-0 w-full h-full bg-red-700/30 rounded"}>*/}
+            {/*                <DeleteBin2 size={24} />*/}
+            {/*            </button>*/}
+            {/*        </div>) }*/}
+            {/*    </div>*/}
+            {/*        }*/}
+            {/*<form method="POST" encType="multipart/form-data" action="https://api2.transloadit.com/assemblies">*/}
+            {/*    <input type="hidden" name="params"*/}
+            {/*           value='%7B%20%22auth%22:%20%7B%20%22key%22:%20%2256a8aa05db5e4f64bef1652cb5a43358%22%20%7D,%20%22redirect_url%22:%20%22http://localhost:3000/upload%22,%20%22template_id%22:%20%222e56e0a213494b91afd038ecb380ccee%22%7D'/>*/}
+            {/*    <input type="file" name="myfile_1" multiple="multiple"/>*/}
+            {/*    <input type="submit" value="Upload"/>*/}
+            {/*</form>*/}
 
-            <Button bordered size={"xl"}  as={"label"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<UploadIcon size={16}/>}>
-                <input type="file" className={"hidden"} name="qualifications" multiple={true} id={"upload"}
-                       onChange={onUploadPic}
-                />
-                Upload Gallery
-            </Button>
+
+            <div className={clsx("w-full flex-col flex", st.fileUploaderWrapper)}>
+                <label className={"mb-2 ml-1"} htmlFor='file'>Your gallery *</label>{' '}
+                <Widget
+                    onDialogClose={onFile}
+                    name={"gallery"}
+                    multiple
+                    // onChange={onFile}
+                    publicKey='917a8b3ac69af67a217a'
+                    id='file' />
+            </div>
+            {/*<Button bordered size={"xl"}  as={"label"} className={"border border-dashed border-2 border-gray-400 text-gray-400"}  icon={<UploadIcon size={16}/>}>*/}
+            {/*    <input type="file" className={"hidden"} name="file" multiple={true} id={"upload"}*/}
+            {/*           onChange={onUploadPic}*/}
+            {/*    />*/}
+            {/*    Upload Gallery*/}
+            {/*</Button>*/}
             <div>
                 <Button  disabled={loading || disabled} onPress={onSubmit} className={"mb-10 mt-3"}  iconRight={!loading && <KeyboardArrowRight size={20}/>}>
                     {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :

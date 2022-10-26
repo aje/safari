@@ -17,7 +17,7 @@ const ListItem = ({item}) => {
                 height={350}
                 showSkeleton
                 width={"100%"}
-                src={"/uploads/" + item.gallery?.[selectedImage].filename}
+                src={item.gallery?.[selectedImage].originalUrl}
                 objectFit="cover"
             />}
 

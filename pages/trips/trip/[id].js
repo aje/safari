@@ -91,12 +91,11 @@ const  Trip = ({item}) => {
         {item.gallery.length === 0 ? <Card   className="my-4"><Empty label="No gallery! Please add pictures to publish"/></Card> :
             <>
         <Card  variant="flat" className="my-3">
-
             <Card.Image
                 // height={350}
                 showSkeleton
                 width={"100%"}
-                src={"/uploads/" + item.gallery?.[selectedImage].filename}
+                src={item.gallery?.[selectedImage].originalUrl}
                 objectFit="cover"
             />
         </Card>
@@ -105,7 +104,7 @@ const  Trip = ({item}) => {
                 <Card isPressable onClick={()=> setSelectedImage(i)} key={i} variant={"flat"}  className={"w-auto mr-3 flex-shrink-0"}>
                     <Card.Body css={{ p: 0 }}>
                         <Card.Image
-                            src={"/uploads/" + image.filename}
+                            src={image.originalUrl}
                             objectFit="cover"
                             width={100}
                             height={100}
