@@ -7,7 +7,7 @@ import {getSession} from "next-auth/react";
 // const availablePathNames = ["/about", "/contact" , "/intro", ]
 
 // export async function middleware(req) {
-//     const url = req.nextUrl.clone()
+//     const url = req.nextUrl.clone()s
 //
 //     // fetch here requires an absolute URL to the auth API route
 //
